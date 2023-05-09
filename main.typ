@@ -35,11 +35,11 @@ A digital twin is a live replica of a Pysical System and is connected to it in r
 == Applications
 Digital Twins are already exensively used in a wide range of fields, ranging from power generation equipment - like large engines, power generation turbines - to establish timeframes for regularly scheduled maintenance, to the health industry where they can be used profile patients and help tracking a variety of health indicators. @dtibm
 
-= SMOL
+= SMOL <smol-heading>
 
 SMOL (Semantic Micro Object Language) is an imperative, object-oriented language with integrated semantic state access. It can be used served as a framework for creating digital twins. The interpreter can be used to examine the state of the system with SPARQL, SHACL and OWL queries. 
 
-== Co-Simulation
+== Co-Simulation <co-simulation>
 SMOL uses _Functional Mock-Up Objects_ (FMOs) as a programming layer to encapsulate simulators compliant with the #link("https://fmi-standard.org")[FMI standard] into object oriented structures @smol
 
 The project is in its early stages of developement, during our internship one of our objectives was to demonstrate the capabilities of the language and help with its developement by being the first users. 
@@ -54,8 +54,25 @@ The creation of a digital twin of the greenhouse and the optimization of the env
 
 = The Greenhouse
 
-// TODO: add image of the greenhouse, add scheme with specifics
-#lorem(200)
+The specific greenhouse we're working on has the following characteristics:
+- It is divided in two shelves
+- Each shelf is composed by two groups of plants
+- Each group of plants is watered by a single water pump
+- Each group of plants is composed by two plants
+- Each plant is associated with a pot
+
+== Assets - Sensors
+The following sensors are used to monitor the environmental conditions of the greenhouse and the plants:
+
+/ Greenhouse:
+- 1 webcam used to measure the light level, can be replaced with a light sensor that would also provide an accurate lux measurement
+/ Shelves:
+- 1 `DHT22` sensor used to measure the temperature and humidity
+/ Pots:
+- 1 capacitive soil moisture sensor used to measure the moisture of the soil
+/ Plants:
+- 1 `Raspberry Pi Camera Module v2 NoIR` used to take pictures of the plants and measure their growth by calculating the `NDVI`
+
 
 = The Role of each Raspberry Pi
 
@@ -64,24 +81,59 @@ There are in total 5 Raspberry Pi 4 used in this project. The division in roles 
 - 3 Raspberry Pi 4 are used as clients, they are connected to the sensors and the actuators and are responsible for sending the data to the server.
 - 1 Raspberry Pi 4 is used as a router and serves to connect clients and server wirelessly.
 
-== The Server
-// TODO:
+/ The Server: The host runs an `InfluxDB` instance that holds the data retried from the clients (_data collectors_) and a `Java` program that periodically runs the #link(<smol-twinning-program>)[`SMOL Twinning program`] which is responsible for creating the digital twin and running the FMI simulators.
 
-== The Clients
-// TODO: add circuitry and wiring diagram
+/ The Clients: We also refer to them as _data collectors_
 
-== The Router
-The Raspberry was configured with `hostapd` and `dnsmasq` to act as a router and provide a wireless network for the clients to connect to.
-The local network is used to access the client via `SSH` and to send data to the server via `HTTP` requests.
+/ The Router: The Raspberry was configured with `hostapd` and `dnsmasq` to act as a router and provide a wireless network for the clients to connect to. The local network is used to access the client via `SSH` and to send data to the server via `HTTP` requests.
 
-= Developing a library to interface with the sensors
+= Tools and Technologies
 
+== InfluxDB
+#link("https://www.influxdata.com/products/influxdb-overview/")[InfluxDB] is a time-series database that is used to store the data colleted by the _data collectors_.
+
+It's organized in _buckets_ that are used to store the _measurements_. Each _measurement_ is composed of:
+
+- _measurement name_
+- _tag set_
+  - Used as keys to index the data
+- _field set_
+  - Used to store the actual data
+- _timestamp_
+
+// TODO: add more stuff
+
+== Developing a library to interface with the sensors
 When working with the Raspberry Pi 4 the obvious choice for a programming language is Python, it is the most widely used language for the Raspberry Pi and it has a lot of support and libraries available.
 
 The goal was to make it extremely modular to be able to add new sensors and actuators with ease.
 
 // TODO: add code snippets, continue writing stuff
 
+== OWL
+#link("https://www.w3.org/TR/owl-ref/")[OWL] is a knwoledge representation language that is used to describe the #link(<asset-model>)[`asset model`] of the greenhouse. It is used to create a formal description of the greenhouse's physical structure and the relationships between the different components.
+
+== SMOL Language
+As introduced in @smol-heading, `SMOL` is an OO programming language in its early developement stages, it allows us to:
+- Interact with the `InfluxDB` and read data from the database, directly without the need of a third party libraries
+- Read and query the knowledge graph, mapping the data to objects in the heap
+- Map the program state to a knowledge graph by means of #link(<semantic-lifting>)[semantic lifting], the program state can be then queried to extract information about the state of the system
+- Represent and run simulation and interact with `modelica`, refer to @co-simulation
+
 = The Digital Twin
 
 // TODO: add stuff about modelica and semantic objects and stuff
+
+= Greenhouse Asset Model <asset-model>
+
+#lorem(30)
+
+= SMOL Twinning program <smol-twinning-program>
+
+The `SMOL` program is run periodically by the server and is responsible for creating the digital twin and running the FMI simulators. It achieves this in the following steps:
++ It reads the #link(<asset-model>)[`asset model`] from the `OWL` file
++ It generates `SMOL` objects from the asset model individuals
++ For each asset object it retrieves the sensor data associated with that specific asset from the database
++ After retrieving the data it performs the #link(<semantic-lifting>)[semantic lifting] of the program state, creating a knowledge grappph that represents the state of the assets in the greenhouse
+
+= Semantic Lifting <semantic-lifting>

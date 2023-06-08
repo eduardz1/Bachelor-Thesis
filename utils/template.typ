@@ -2,6 +2,7 @@
   title: "",
   abstract: [],
   aknowlegements: none,
+  declaration-of-originality: none,
   affiliation: (),
   authors: (),
   date: none,
@@ -37,16 +38,23 @@
   set list(indent: 10pt, body-indent: 9pt)
 
   // Configure headings.
-  set heading(numbering: "I.A.1.")
+  set heading(numbering: "1.a.I")
   show heading.where(
-  level: 1
+    level: 1
+  ): it => block(width: 100%, height: 8%)[
+    #set align(center)
+    #set text(16pt, weight: "bold")
+    #smallcaps(it.body)
+  ]
+  show heading.where(
+  level: 2
   ): it => block(width: 100%)[
     #set align(center)
     #set text(12pt, weight: "bold")
     #smallcaps(it.body)
   ]
   show heading.where(
-  level: 2
+  level: 3
   ): it => text(
     size: 11pt,
     weight: "regular",
@@ -99,33 +107,33 @@
   v(2.4fr)
   pagebreak()
 
-  // Aknowlegements page
+  // Aknowlegements
   v(1fr)
-  align(center)[
-    #heading(
-      outlined: false,
-      numbering: none,
-      text(12pt, smallcaps[Aknowlegements]),
-    )
-  ]
+
+  set align(center)
+  heading(level: 2, numbering: none, outlined: false, "Aknowlegements")
   aknowlegements
+  v(0.2fr)
+
+  set align(left)
+  text(smallcaps[Declaration of Originality])
+  linebreak()
+  set text(style: "italic")
+  text("\"" + declaration-of-originality + "\"")
+  set text(style: "normal")
+  v(0.5fr)
+
+  // Abstract
+  set align(center)
+  heading(level: 2, numbering: none, "Abstract")
+  abstract
+
   v(1.618fr)
   pagebreak()
-
 
   // Table of contents.
   outline(depth: 3, indent: true)
   pagebreak()
-
-
-  // Main body.
-  counter(page).update(1)
-
-  // Abstract
-  set align(center)
-  heading(numbering: none, text(12pt, smallcaps[Abstract]))
-  abstract
-
 
   // Main body
   set par(justify: true, first-line-indent: 1em)
@@ -137,6 +145,6 @@
   // Bibliography
   if bibliography-file != none {
     show bibliography: set text(10pt)
-    bibliography(bibliography-file, title: text(12pt, smallcaps[References]), style: "ieee")
+    bibliography(bibliography-file, title: "References", style: "ieee")
   }
 }

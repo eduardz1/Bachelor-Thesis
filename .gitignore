@@ -1,5 +1,7 @@
 .vscode/
-template.pdf
+
+*.pdf
+!main.pdf
 
 # Preview temporary files
 .typst-preview.*.typ

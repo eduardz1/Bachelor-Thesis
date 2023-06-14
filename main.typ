@@ -36,6 +36,8 @@
 
 #include "chapters/the-project.typ"
 
+#include "chapters/software-components.typ"
+
 
 = The Greenhouse
 
@@ -75,17 +77,5 @@ There are in total 5 Raspberry Pi 4 used in this project. The division in roles 
 = The Digital Twin
 
 // TODO: add stuff about modelica and semantic objects and stuff
-
-= Greenhouse Asset Model <asset-model>
-
-#lorem(30)
-
-= SMOL Twinning program <smol-twinning-program>
-
-The `SMOL` program is run periodically by the server and is responsible for creating the digital twin and running the FMI simulators. It achieves this in the following steps:
-+ It reads the #link(<asset-model>)[`asset model`] from the `OWL` file
-+ It generates `SMOL` objects from the asset model individuals
-+ For each asset object it retrieves the sensor data associated with that specific asset from the database
-+ After retrieving the data it performs the #link(<semantic-lifting>)[semantic lifting] of the program state, creating a knowledge grappph that represents the state of the assets in the greenhouse
 
 = Semantic Lifting <semantic-lifting>

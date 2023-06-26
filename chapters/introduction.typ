@@ -1,6 +1,7 @@
-#import "../utils/funcs.typ": *
+#import "../utils/common.typ": *
 
-= Introduction // TODO: find a synonim of project
+= Introduction 
+// TODO: find a synonim of project
 
 The following project was realized as an internship project during my Erasmus semester abroad in Oslo, Norway. The project was realized in collaboration with the #link("https://www.uio.no/")[University of Oslo] and the #link("https://sirius-labs.no/")[Sirius Research Center].
 

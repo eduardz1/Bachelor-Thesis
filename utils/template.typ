@@ -14,7 +14,6 @@
   // Set the document's basic properties.
   set document(author: authors.map(a => a.name), title: title)
   set text(font: "New Computer Modern", lang: "en", size: 11pt)
-  show raw: set text(size: 0.8em)
   show outline.entry.where(level: 1): strong
 
   set page(
@@ -35,9 +34,24 @@
   set math.equation(numbering: "(1)")
   show math.equation: set block(spacing: 0.65em)
 
-  // Configure lists.
+  // Configure raw text/code blocks
+  show raw.where(block: true): set text(size: 0.8em)
+  show raw.where(block: true): block.with(
+    fill: luma(240),
+    inset: 10pt,
+    radius: 4pt,
+    width: 100%,
+  )
+  show raw.where(block: false): box.with(
+    fill: luma(240),
+    inset: (x: 3pt, y: 0pt),
+    outset: (y: 3pt),
+    radius: 2pt,
+  )
+
+  // Configure lists and enumerations.
   set enum(indent: 10pt, body-indent: 9pt)
-  set list(indent: 10pt, body-indent: 9pt)
+  set list(indent: 10pt, body-indent: 9pt, marker: ([•], [--]))
 
   // Configure headings.
   set heading(numbering: "1.a.I")
@@ -45,31 +59,30 @@
     level: 1
   ): it => block(width: 100%, height: 8%)[
     #set align(center)
-    #set text(16pt, weight: "bold")
+    #set text(1.2em, weight: "bold")
     #smallcaps(it.body)
   ]
   show heading.where(
   level: 2
   ): it => block(width: 100%)[
     #set align(center)
-    #set text(12pt, weight: "bold")
+    #set text(1.1em, weight: "bold")
     #smallcaps(it.body)
   ]
   show heading.where(
   level: 3
-  ): it => text(
-    size: 11pt,
-    weight: "regular",
-    style: "italic",
-    it.body + [.],
-  )
+  ): it => block(width: 100%)[
+    #set align(left)
+    #set text(1em, weight: "bold")
+    #smallcaps(it.body)
+  ]
 
   // Affiliation
   align(center)[
     #grid(
       columns: auto,
       align(center)[
-        #set text(16pt, weight: "bold")
+        #set text(1.45em, weight: "bold")
         #affiliation.university \
         #set text(12pt, weight: "regular")
         #affiliation.department \
@@ -146,7 +159,7 @@
 
   // Bibliography
   if bibliography-file != none {
-    show bibliography: set text(10pt)
+    show bibliography: set text(0.9em)
     bibliography(bibliography-file, title: "References", style: "ieee")
   }
 }

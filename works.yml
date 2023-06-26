@@ -9,3 +9,9 @@ dtibm:
   title: "What is a Digital Twin?"
   author: "IBM"
   url: "https://www.ibm.com/topics/what-is-a-digital-twin"
+
+ndvidef:
+  type: Web
+  title: "What is the NDVI?"
+  author: "USGS"
+  url: "https://www.usgs.gov/landsat-missions/landsat-normalized-difference-vegetation-index"

@@ -1,4 +1,4 @@
-#import "../utils/funcs.typ": *
+#import "../utils/common.typ": *
 
 = Tools and Technologies
 
@@ -73,7 +73,7 @@ ast:Basilicum rdf:type owl:Class ;
     `SMOL` is an OO programming language in its early developement stages, it allows us to:
     - Interact with the `InfluxDB` and read data from the database, directly without the need of a third party libraries
     - Read and query the knowledge graph, mapping the data to objects in the heap
-    - Map the program state to a knowledge graph by means of #link(<semantic-lifting>)[semantic lifting], the program state can be then queried to extract information about the state of the system
+    - Map the program state to a knowledge graph by means of semantic lifting, the program state can be then queried to extract information about the state of the system
     - Represent and run simulation and interact with `modelica`
     
     It will be treated in more details in its dedicated section.

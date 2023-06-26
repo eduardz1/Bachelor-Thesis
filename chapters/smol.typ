@@ -1,4 +1,4 @@
-#import "../utils/funcs.typ": *
+#import "../utils/common.typ": *
 
 = SMOL <smol-heading>
 

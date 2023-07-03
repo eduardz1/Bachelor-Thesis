@@ -54,7 +54,7 @@ A more in depth guide to exactly replicate our setup was published #link("https:
 
     The following schematics mirror what we did the connect the sensor to the board
 
-    // TODO: add image with connections
+    #image("../img/dht22-schematics.jpeg")
 
     We used the #link("https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py")[circuitpython] libraries, which provide a more modern implementation compared to the standard adafruit libraries.
 
@@ -93,9 +93,9 @@ dhtDevice.exit()
 
     === Moisture <moisture>
 
-    We used a generic moisture capacitive /* TODO: check if it's really capacitive */ moisture sensor, to convert the analogue signal we need to use an analog-to-digital converter. For our purpose we used the `MCP3008` ADC which features eight channels, thus making it possible to exend our setup with a decent number of other sensors (for example a PH-meter or a LUX-meter). The following schematics illustrate how we connected the ADC to the board and the moisture sensor to the adc.
+    We used a generic moisture capacitive soil moisture sensor, to convert the analogue signal we need to use an analog-to-digital converter. For our purpose we used the `MCP3008` ADC which features eight channels, thus making it possible to exend our setup with a decent number of other sensors (for example a PH-meter or a LUX-meter). The following schematics illustrate how we connected the ADC to the board and the moisture sensor to the adc.
 
-    // TODO: add schematics
+    #image("../img/mcp3008-moisture-schematics.jpeg")
 
     We used `SpiDev` as the library to communicate with the ADC, the following class aids in the readout of the connected sensor:
 
@@ -286,7 +286,7 @@ class NDVI:
 
     In general to connect actuators (like pumps, light switches or fans) we can relay on a relay. To connect the relay we can refer to the following schematics:
 
-    // TODO: aggiungi schematics
+    #image("../img/relay-pump-schematics.jpeg")
 
     In our project we just conneted one pump but it's trivial to extend the project to multiple pumps (for example we plan to add one dedicated to pumping fertilized water) or other devices. An example of the code used to interact with the pump is the following:
 
@@ -324,5 +324,15 @@ def pump_water(sec, pump_pin):
         # stop pump when ctrl-c is pressed
         GPIO.cleanup()
 ```
+
+    == Putting it all Together
+
+    // FIXME: why is it rotated!!!?!?!?!?
+    #figure(
+      image("../img/greenhouse.jpeg"),
+      caption: [
+        the bottom shelf of our greenhouse, not in the picture the router, host and lights
+      ]
+    )
   ]
 )

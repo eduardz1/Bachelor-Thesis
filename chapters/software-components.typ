@@ -18,11 +18,395 @@ The following is an overview of the software components it was necessary to writ
 
     To collect data from the sensors connected to the greenhouse we wrote a python program that retrieves the data and uploads them to InfluxDB.
 
-    The repo can be found at https://github.com/N-essuno/greenhouse-data-collector. What follows is an overview of the program
+    // TODO: remove link to personal repo
+    The repository can be found at https://github.com/N-essuno/greenhouse-data-collector.
+
+    The project is organized as follows:
+
+```
+.
+├──  .github
+│   └──  workflows
+│       └──  black.yml
+├──  collector
+│   ├──  __init__.py
+│   ├──  __main__.py
+│   ├──  assets
+│   │   ├──  __init__.py
+│   │   ├──  asset.py
+│   │   ├──  greenhouse_asset.py
+│   │   ├──  measurement_type.py
+│   │   ├──  plant_asset.py
+│   │   ├──  pot_asset.py
+│   │   ├──  pump_asset.py
+│   │   ├──  shelf_asset.py
+│   │   └──  utils.py
+│   ├──  config.ini.example
+│   ├──  config.py
+│   ├──  demo
+│   │   ├──  __init__.py
+│   │   └──  demo_influx.py
+│   ├──  influx
+│   │   ├──  __init__.py
+│   │   └──  influx_controller.py
+│   ├──  sensors
+│   │   ├──  __init__.py
+│   │   ├──  humidity.py
+│   │   ├──  interpreter.py
+│   │   ├──  light_level.py
+│   │   ├──  mcp3008.py
+│   │   ├──  moisture.py
+│   │   ├──  ndvi.py
+│   │   ├──  temperature.py
+│   │   └──  water_level.py
+│   └──  tests
+│       ├──  __init__.py
+│       ├──  config_test.ini
+│       ├──  random_measurements.py
+│       ├──  test_config_eval.py
+│       └──  test_influx_controller.py
+├──  .gitignore
+├──  .pre-commit-config.yaml
+├──  README.md
+├──  requirements.txt
+└──  scripts
+    └──  load_random_data.py
+```
+    The project features a `requirements.txt` file that contains all the dependencies needed to run the program.
+
+    There is a script `load_random_data.py` that can be used to load random data into the database. It can be used to test the program without having to connect the sensors to the raspberry pi.
+
+    The `pre-commit-config.yaml` file is used to configure the pre-commit hooks that are run before every commit. The hooks are used to format the code, reorder imports and check for errors.
+
+    The `.github` folder contains the CI configuration file that is used to check that the code is formatted correctly and can be extended to also run the tests in the future.
+    
+    In the `test` folder there are some tests that verify the functionality of the program.
+
+    === The Collector Module
+
+    The program is structured as a python module. The main module is the `collector` module. It contains the `__main__.py` file that is the entry point of the program. It also contains the `config.py` file that is responsible for reading the configuration file and making it available to the rest of the program. The configuration file is a `.ini`, in the main module we include an example file that can be used as a template. The configuration file enables the user to configure the following parameters:
+
+    ```ini
+[influx2]
+url=
+org=
+token=
+
+[pots]
+# moisture_adc_channel refers to the channel in the Analog to Digital Converter
+pot_1={"shelf_floor":"1", "group_position":"left", "pot_position":"left", "moisture_adc_channel":1, "plant_id":"1"}
+pot_2={"shelf_floor":"1", "group_position":"left", "pot_position":"right", "moisture_adc_channel":2, "plant_id":"2"}
+
+[shelves]
+shelf_1={"shelf_floor":"1", "humidity_gpio_pin":4, "temperature_gpio_pin":4}
+
+[plants]
+plant_1={"plant_id":"1"}
+plant_2={"plant_id":"2"}
+
+[sensor_switches]
+use_infrared_sensor=false
+use_light_sensor=false
+
+[moisture_values]
+XP=[2.45, 1.2]
+
+[water_level_values]
+XP=[1.1, 2.0]
+
+[light_level_values]
+XP=[80, 180]
+```
+
+    The numbers in the configuration file are what we actually used for our sensors after calibrating them, `pots`, `shelves` and `plants` are dictionary that represent the asset model of the greenhouse, `sensor_switches` is used to enable or disable the readout of some of the sensors, `moisture_values`, `water_level_values` and `light_level_values` are the values used to calibrate the sensors, we'll talk more about this later.
+
+    The collector module is composed of the following submodules:
+    - `assets`
+    - `demo`
+    - `influx`
+    - `sensors`
+    - `tests`
+
+    === Assets
+
+    Used to represent the various assets in our database as classes, having used the python `ABC` module to help us with better class inheritance, we can get an idea on how each of them work just by looking at an excerpt of the `Asset` class.
+
+    ```python
+import logging
+import sys
+import threading
+import time
+import traceback
+from abc import ABC, abstractmethod
+
+from influxdb_client import Point
+
+from collector.influx.influx_controller import InfluxController
+
+
+class Asset(ABC):
+  stop_flag = threading.Event()
+  influx_controller = InfluxController()
+  sensor_read_interval = 5
+
+  def set_sensor_read_interval(
+    self, sensor_read_interval: int
+  ) -> None:
+    """
+    Sets the sensor read interval in seconds
+    """
+    self.sensor_read_interval = sensor_read_interval
+
+  @abstractmethod
+  def to_point(self) -> Point:
+    """
+    Convert the asset to a point. Returns a point
+    with the fields and tags of the asset
+    """
+    pass
+
+  @abstractmethod
+  def stop_sensor(self):
+    pass
+
+  def read_sensor_data(self) -> None:
+    """
+    Read sensor data and write a point to influxdb. 
+    The point is created by the to_point() method.
+    Repeat every sensor_read_interval seconds.
+    """
+    try:
+      bucket = self.influx_controller.get_bucket(
+        "greenhouse"
+      )
+
+      while not self.stop_flag.is_set():
+        point = self.to_point()
+        self.influx_controller.write_point(
+          point, bucket
+        )
+        time.sleep(self.sensor_read_interval)
+    except Exception as e:
+      self.stop_sensor()
+      sys.exit(1)
+
+    self.stop_sensor()
+    sys.exit(0)
+
+  def stop_thread(self):
+    self.stop_flag.set()
+
+  def reset_stop_flag(self):
+    self.stop_flag.clear()
+    ```
+
+    Where we can see the way that the `to_point` and `stop_sensor` methods are implemented by looking, as an example, to an excerpt of the `ShelfAsset` class.
+
+    ```python
+from dataclasses import dataclass...
+
+
+@dataclass
+class ShelfAsset(Asset):
+  """
+  Class representing The Shelf Asset
+
+  Attributes:
+    sh_floor (str): floor of the shelf, 1 or 2
+    humidity_sensor (Humidity)
+    temp_sensor (Temperature)
+  """
+
+  sh_floor: str
+  hum_sensor: Humidity
+  temp_sensor: Temperature
+
+  _typ = MeasurementType.SHELF.get_measurement_name()
+
+  def __post_init__(self):
+    if self.sh_floor != "1" and self.sh_floor != "2":
+      raise ValueError("sh_floor must be 1 or 2")
+
+  def to_point(self) -> Point:
+    return (
+      Point(self._typ)
+      .tag("shelf_floor", self.sh_floor)
+      .field("temperature", self.temp_sensor.read())
+      .field("humidity", self.hum_sensor.read())
+    )
+
+  def stop_sensor(self):
+    self.temperature_sensor.stop()
+    ```
+
+    In general with each asset we initialize some class variables and verify that the value they are initialized with are valid (using the `__post_init__` method). Here `_typ` turns out to be equivalent to the string `ast:shelf` which is the asset type prefixed by the namespace `ast`, required in InfluxDB. The point is then decorated with the tags and fields that are specific to the asset.
+
+
+    This way of structuring the Asset classes makes it very easy to extend the program to support new assets.
+
+    === Influx
+
+    The `influx` module is a wrapper around the `influxdb_client` library. It contains a class `InfluxController` that is responsible for creating the client and the bucket and for writing points to the database.
+
+    The class in treated as a singleton, so that only one instance of it can be created. This is done by using the `__new__` method.
+
+    ```python
+from typing import Iterable, Optional, Union...
+
+
+class InfluxController:
+  """
+  Singleton that handles the connection to InfluxDB.
+  Attributes:
+    _instance: the singleton instance
+    _client: the InfluxDB client used to interact with the database
+  """
+
+  _instance = None
+  _client = InfluxDBClient
+            .from_config_file(CONFIG_PATH)
+
+  def __new__(cls):
+    """
+    Create a new instance of the class if it does not
+    exist, otherwise return the existing one
+    """
+    if cls._instance is None:
+      cls._instance = super(
+        InfluxController, cls
+      ).__new__(cls)
+
+    return cls._instance
+
+  def delete_bucket(self, bucket_name: str) -> bool:
+    ...
+
+  def get_bucket(
+    self, bucket_name: str
+  ) -> Optional[Bucket]:
+    ...
+
+  def create_bucket(self, bucket_name: str) -> Bucket:
+    ...
+
+  def write_point(
+    self,
+    point: Union[Point, Iterable[Point]],
+    bucket: Bucket
+  ) -> bool:
+    ...
+
+  def close(self):
+    self._client.close()
+```
+
+    === Sensors
+
+    The `sensors` module contains the classes that represent the sensors connected to the raspberry pi. Each sensor class has a method `read` that returns the value measured, in cases such as the moisture sensor, the value needs to be converted to a number that makes sense as a measurement, in this case a percentage. When such a conversion is needed, the class feeds the value to an interpreter as we can see below.
+
+    ```python
+from collector.sensors.interpreter import Interpreter
+from collector.sensors.mcp3008 import MCP3008
+
+
+class Moisture:
+    def __init__(
+      self, adc: MCP3008, channel: int
+    ) -> None:
+      """Initializes the Moisture sensor.
+
+      Args:
+        adc (MCP3008): the analog to digital converter
+        channel (int): the channel of the ADC to which 
+                       the sensor is connected
+      """
+      self.interpret = Interpreter("moisture")
+                       .interpret
+
+      self.adc = adc
+      self.channel = channel
+
+    def read(self) -> float:
+      return self.interpret(
+        self.adc.read(self.channel)
+      )
+
+    def stop(self):
+      self.adc.close()
+    ```
+
+    The `Interpreter` is a class that utilizes the numpy `interp` function that performs one-dimensional linear interpolation of monotonically increasing points. Here we can see how the values in the configuration file are used to convert the raw values.
+
+    Having the function cached as a class variable enables us to reuse it for every value that needs to be converted, for a noticable performance improvement.
+
+    ```python
+import json
+import numpy as np
+
+from collector.config import CONFIG_PATH
+
+try:
+  # >3.2
+  from configparser import ConfigParser
+except ImportError:
+  # python27
+  # Refer to the older SafeConfigParser as ConfigParser
+  from configparser import SafeConfigParser as ConfigParser
+
+
+class Interpreter:
+  """
+  Class that interprets raw values from sensors to
+  meaningful values. Uses a linear interpolation, 
+  a variable number of points can be used
+  to define the interpolation function.
+  """
+
+  def __init__(
+    self, sensor: str, range: tuple = (0, 100)
+  ):
+    conf = ConfigParser()
+    conf.read(CONFIG_PATH)
+
+    self.XP = json.loads(
+      conf[sensor + "_values"]["XP"]
+    )
+    self.FP = np.linspace(
+      range[0], range[1], len(self.XP)
+    )
+
+    # If the first value is greater than the 
+    # last one, reverse the arrays
+    if self.XP[0] > self.XP[-1]:
+      self.XP = self.XP[::-1]
+      self.FP = self.FP[::-1]
+
+  def interpret(self, value: float) -> float:
+      return np.interp(value, self.XP, self.FP)
+    ```
+
+    Instead of reding the values from the configuration file as standard single values we read them as a json, this enables us to submit multiple values and calculate the interpolation function even for sensors that don't change voltage linearly. The numpy `linspace` function is used to create an array of values that are linearly spaced between the first and the last value of the `range` tuple with length equal to the number of values in the `XP` array. The arrays `XP` and `FP`, respectively the x-coordinates of the data-points and the y-coordinates of the data-points, are reversed if the values are not in ascending order, this way it's possible to use the `interp` function even for sensors like the moisture sensor that decreases in voltage as the moisture increases.
+
+    === \_\_main\_\_
+
+    The main class serves to start the data collection, it operates in a multithreaded fashion, starting a thread for each asset. It also handles the stopping of the threads when the program is interrupted.
+
+    == Actuators Script
+
+    As a separate project we have created a python module that serves to run the various scripts for the actuators. Actuators can be pumps (for watering or fertilizing), can be electronic switches for the lights, can be fans for air circulation ecc...
+
+    Being seaprated in a separate module makes it so that the actuators can be run remotely from the server running the SMOL scheduler.
 
     == Greenhouse Asset Model <asset-model>
 
-    #lorem(30) // TODO:
+
+    // TODO: ontology, knowledge graph
+
+    The asset model is a representation of the greenhouse as a knowledge graph.
+
+    // ... write stuff
+
+    
 
     == SMOL Twinning program <smol-twinning-program>
 

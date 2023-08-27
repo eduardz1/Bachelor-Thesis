@@ -14,7 +14,16 @@
   // Set the document's basic properties.
   set document(author: authors.map(a => a.name), title: title)
   set text(font: "New Computer Modern", lang: "en", size: 11pt)
-  show outline.entry.where(level: 1): strong
+  show outline.entry.where(
+  level: 1
+  ): it => {
+    v(12pt, weak: true)
+    strong({
+      it.body
+      h(1fr)
+      it.page
+    })
+  }
 
   set page(
     paper: paper-size,

@@ -44,7 +44,7 @@
   show math.equation: set block(spacing: 0.65em)
 
   // Configure raw text/code blocks
-  show raw.where(block: true): set text(size: 0.8em)
+  show raw.where(block: true): set text(size: 0.8em, font: "FiraCode Nerd Font")
   show raw.where(block: true): block.with(
     fill: luma(240),
     inset: 10pt,

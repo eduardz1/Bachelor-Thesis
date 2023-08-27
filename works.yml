@@ -15,3 +15,49 @@ ndvidef:
   title: "What is the NDVI?"
   author: "USGS"
   url: "https://www.usgs.gov/landsat-missions/landsat-normalized-difference-vegetation-index"
+
+ksosu:
+  type: Article
+  title: "Knowledge Structures Over Simulation Units"
+  author: ["Eduard Kamburjan", "Einar Broch Johnsen"]
+  date: 2022
+  page-range: "78-89"
+  parent:
+    type: Periodical
+    title: "2022 Annual Modeling and Simulation Conference (ANNSIM)"
+
+tbc:
+  type: proceedings
+  title: "Twinning-by-Construction: Ensuring Correctness for Self-adaptive Digital Twins"
+  author: ["Eduard Kamburjan", "Crystal Chang Din", "Rudolf Schlatte", "Silvia Lizeth Tapia Tarifa", "Einar Broch Johnsen"]
+  date: 2022
+  parent:
+    type: Book
+    title: "Leveraging Applications of Formal Methods"
+
+# TODO: find or ask for pdf if needed
+dtreconf:
+  type: proceedings
+  title: "Digital Twin Reconfiguration Using Asset Models"
+  author: ["Eduard Kamburjan", "Vidar Norstein Klungre", "Rudolf Schlatte", "Silvia Lizeth Tapia Tarifa", "David Cameron", "Einar Broch Johnsen"]
+  date: 2022
+  parent:
+    type: Book
+    title: "Leveraging Applications of Formal Methods"
+
+foswt:
+  type: Book
+  title: "Foundations of Semantic Web Technologies"
+  author: ["Pascal Hitzler", "Markus Krotzsch", "Sebastian Rudolph"]
+  date: 2010
+  publisher: "Chapman and Hall/CRC"
+  doi: 10.1201/9781420090512
+  isbn: 978-1-4200-9050-5
+
+rr499:
+  type: Report
+  title: "Programming and Debugging with Semantically Lifted States"
+  author: ["Eduard Kamburjan", "Vidar Norstein Klungre", "Rudolf Schlatte", "Einar Broch Johnsen", "Martin Giese"]
+  date: 2021-03
+  isbn: 978-82-7368-464-6
+  issn: 0806-3036

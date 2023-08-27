@@ -1,5 +1,7 @@
 .vscode/
 
+resources/
+
 *.pdf
 !main.pdf
 

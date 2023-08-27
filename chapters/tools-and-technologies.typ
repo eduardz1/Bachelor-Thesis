@@ -24,13 +24,13 @@ The following is a general oveview of the tools and technologies used in the pro
     For example the following query will return the last moisture measurement, given a measurement range of 30 days, from the bucket of name `greenhouse`:
 
     ```SQL
-    from(bucket: "greenhouse")
-      |> range(start: -30d)
-      |> filter(fn: (r) => r["_measurement"] == "ast:pot")
-      |> filter(fn: (r) => r["_field"] == "moisture")
-      |> filter(fn: (r) => r["plant_id"] == %1)
-      |> keep(columns: ["_value"])
-      |> last()
+from(bucket: "greenhouse")
+  |> range(start: -30d)
+  |> filter(fn: (r) => r["_measurement"] == "ast:pot")
+  |> filter(fn: (r) => r["_field"] == "moisture")
+  |> filter(fn: (r) => r["plant_id"] == %1)
+  |> keep(columns: ["_value"])
+  |> last()
     ```
 
     Chronograf is included in the InfluxDB 2.0 package, it is the tool that we chose to visualize the data stored in the database and to create dashboards.

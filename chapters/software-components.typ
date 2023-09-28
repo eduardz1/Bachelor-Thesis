@@ -410,13 +410,18 @@ class Interpreter:
 
     == SMOL Twinning program <smol-twinning-program>
 
-    The `SMOL` program is run periodically by the server and is responsible for creating the digital twin and running the FMI simulators. It achieves this in the following steps:
+    The `SMOL` program is run periodically by the server and is responsible for creating the digital twin and running the FMI simulators. 
+    
+    // TODO: add reasoning on absence of FMI simulators
+    It achieves this in the following steps:
     + It reads the #link(<asset-model>)[`asset model`] from the `OWL` file
     + It generates `SMOL` objects from the asset model individuals
     + For each asset object it retrieves the sensor data associated with that specific asset from the database
     + After retrieving the data it performs the semantic lifting of the program state, creating a knowledge grappph that represents the state of the assets in the greenhouse
 
     == The Digital Twin
+
+    
 
     // TODO: add stuff about modelica and semantic objects and stuff
   ]

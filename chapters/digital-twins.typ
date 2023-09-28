@@ -13,6 +13,10 @@ NASA was one of the first to introduce the concept of digital twins, however thi
     == Applications
     Digital Twins are already exensively used in a wide range of fields, ranging from power generation equipment - like large engines, power generation turbines - to establish timeframes for regularly scheduled maintenance, to the health industry where they can be used profile patients and help tracking a variety of health indicators. @dtibm
 
+    == Twinning by Construction
+    // TODO:
+    Digital twins that mirror a structure that does not change over time, also reffered to as static digital twins, are said to be _twinned-by-construction_ if the initialisation of the digital system ensures the twinning property @tbc. 
+
     == Digital Shadows
     // TODO: add content
   ]

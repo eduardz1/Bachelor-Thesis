@@ -6,7 +6,7 @@
 
 #show: project.with(
   title: "Design and Development of the Digital Twin of a Greenhouse",
-  abstract: "We will see how digital twins can be used and applied in a range of scenarios, we'll introduce the language 'SMOL', created specifically for this purpose, and talk about the work of me and my collegues in the process of designing and implementing a digital twin of a greenhouse.",
+  abstract: "We will see how digital twins can be used and applied in a range of scenarios, we'll introduce the language 'SMOL', created specifically for this purpose, and talk about the work of me and my colleagues in the process of designing and implementing a digital twin of a greenhouse.",
   aknowlegements: aknowlegements,
   declaration-of-originality: declaration_of_originality,
   affiliation: (

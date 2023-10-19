@@ -8,6 +8,8 @@ SMOL uses _Functional Mock-Up Objects_ (FMOs) as a programming layer to encapsul
 
 The project is in its early stages of developement, during our internship one of our objectives was to demonstrate the capabilities of the language and help with its developement by being the first users.
 
+Details on the implementation can be found in the #link(<smol-twinning-program>)[SMOL Twinning Program] section.
+
 #_content(
   [
     == A Functional Mock-Up Object Language
@@ -15,10 +17,13 @@ The project is in its early stages of developement, during our internship one of
     SMOL goes beyond what would be achievable by extending any tradional language by incorporating FMUs as Functional Mock-Up Objects in its runtime.
 
     == Co-Simulation <co-simulation>
-    // TODO: 
+    // TODO:
+
+    == MAPE-K
+    
    
     == Semantical Lifting
-    Semantical Lifting maps a program state to a knowledge graph, to see the program state through the lense of domain knowledge @ksosu. 
+    Semantical Lifting maps a program state to a knowledge graph, to see the program state through the lense of domain knowledge @ksosu.
 
   ]
 )

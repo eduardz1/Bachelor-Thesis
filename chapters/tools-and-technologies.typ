@@ -51,6 +51,10 @@ from(bucket: "greenhouse")
 
     // TODO: add code snippets, continue writing stuff
 
+    == RDF
+    // TODO: 
+    == SPARQL
+    // TODO:
     == OWL
 
     #link("https://www.w3.org/TR/owl-ref/")[OWL] is a knowledge representation language that is used to describe the #link(<asset-model>)[`asset model`] of the greenhouse. It is used to create a formal description of the greenhouse's physical structure and the relationships between the different components.
@@ -67,6 +71,10 @@ ast:Basilicum rdf:type owl:Class ;
           owl:hasValue "70.0"
     ] .
     ```
+
+    === Protégé
+
+    // TODO: add a screenshot of the protégé interface
 
     == SMOL Language
     

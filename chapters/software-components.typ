@@ -404,9 +404,147 @@ class Interpreter:
 
     The asset model is a representation of the greenhouse as a knowledge graph.
 
-    // ... write stuff
+    === Working with the Ontology
 
-    
+    To work with the ontology we created a `SMOL` class that reflects the structure of the asset model.
+
+    ```java
+/**
+* Retrieves data from the asset model and convert it
+* to SMOL objects
+*/
+class AssetModel()
+  // get pot instances from the asset model
+  List<Pot> getPots()
+    List<Pot> pots = construct("
+    PREFIX ast: <http://www.semanticweb.org/gianl/ontologies/2023/1/sirius-greenhouse#>
+    SELECT ?shelfFloor ?groupPosition ?potPosition
+    WHERE {
+      ?pot rdf:type ast:Pot ;
+        ast:hasShelfFloor ?shelfFloor ;
+        ast:hasGroupPosition ?groupPosition ;
+        ast:hasPotPosition ?potPosition .
+    }");
+    return pots;
+    // edit query to get new pots
+  end
+
+  // get shelf instances from the asset model
+  List<Shelf> getShelves()
+    List<Shelf> shelves = construct("
+      PREFIX ast: <http://www.semanticweb.org/gianl/ontologies/2023/1/sirius-greenhouse#>
+      SELECT ?shelfFloor
+      WHERE {
+        ?shelf rdf:type ast:Shelf ;
+          ast:hasShelfFloor ?shelfFloor .
+      }
+  ");
+    return shelves;
+  end
+
+  // get pump instances from the asset model
+  List<Pump> getPumps()
+    List<Pump> pumps = construct("
+      PREFIX ast: <http://www.semanticweb.org/gianl/ontologies/2023/1/sirius-greenhouse#>
+      SELECT ?shelfFloor ?groupPosition
+      WHERE {
+        ?pump rdf:type ast:Pump ;
+          ast:hasShelfFloor ?shelfFloor ;
+          ast:hasGroupPosition ?groupPosition.
+      }
+    ");
+    return pumps;
+  end
+
+    // get plant instances from the asset model
+  List<Plant> getPlants()
+    List<Plant> plants = construct("
+      PREFIX ast: <http://www.semanticweb.org/gianl/ontologies/2023/1/sirius-greenhouse#>
+      SELECT ?plantId ?idealMoisture
+      WHERE {
+        ?plant rdf:type ast:Plant ;
+          ast:hasPlantId ?plantId ;
+          ast:hasIdealMoisture ?idealMoisture .
+      }
+    ");
+    return plants;
+  end
+
+  // get health state instances from the asset model
+  List<HealthState> getHealthStates()
+    List<HealthState> healthStates = construct("
+      PREFIX ast: <http://www.semanticweb.org/gianl/ontologies/2023/1/sirius-greenhouse#>
+      SELECT ?name ?minNdvi ?maxNdvi
+      WHERE {
+        ?healthState rdf:type ast:HealthState ;
+          ast:hasName ?name ;
+          ast:hasMinNdvi ?minNdvi ;
+          ast:hasMaxNdvi ?maxNdvi .
+      }
+    ");
+    return healthStates;
+  end
+
+  Unit printAssetModelData()
+    ...
+  end
+end
+    ```
+
+    Here we see that the syntax of `SMOL` is very intuitive, with the `end` keyword used to delineate code blocks.
+
+    We see that each class has a method that retrieves the instances of that class from the asset model. The `construct` top-level expression constructs a list of new objects from a `SPARQL` query @smol.
+    An example of how the classes are defined in `SMOL` is the following:
+
+    ```java
+/**
+* Represents a physical Plant. Should be retrieved 
+* from the asset model via AssetModel.getPlants()
+* Each plant is contained in a Pot. The Pot contains
+* the information about which plant it contains.
+*/
+class Plant(String plantId, Double idealMoisture, String healthState)
+  Double getNdvi()
+    Double healthState = 0.0;
+    List<Double> influxReturn = null;
+
+    influxReturn = access(
+      "from(bucket: \"greenhouse_test\")
+        |> range(start: -30d)
+        |> filter(fn: (r) => r[\"_measurement\"] == \"ast:plant\")
+        |> filter(fn: (r) => r[\"_field\"] == \"ndvi\")
+        |> filter(fn: (r) => r[\"plant_id\"] == %1)
+        |> keep(columns: [\"_value\"])
+        |> last()",
+    INFLUXDB("config_local.yml"),
+    this.plantId);
+
+    healthState = influxReturn.get(0);
+    return healthState;
+  end
+
+  Double getPotMoisture()
+    Double moisture = 0.0;
+    List<Double> influxReturn = null;
+
+    influxReturn = access(
+      "from(bucket: \"greenhouse_test\")
+        |> range(start: -30d)
+        |> filter(fn: (r) => r[\"_measurement\"] == \"ast:pot\")
+        |> filter(fn: (r) => r[\"_field\"] == \"moisture\")
+        |> filter(fn: (r) => r[\"plant_id\"] == %1)
+        |> keep(columns: [\"_value\"])
+        |> last()",
+    INFLUXDB("config_local.yml"),
+    this.plantId);
+
+    moisture = influxReturn.get(0);
+    return moisture;
+  end
+end
+    ```
+
+    Here we see a second top-level expression, the `access expression`, also called `query expression`, used to retrieve a list of literarls or lifted objects using a query mode `SPARQL` to access the semantically lifted state or `INFLUXDB` to access an external InfluxDB database @smol. In our case we use the `INFLUXDB` query mode to retrieve the values of the sensors from the database.
 
     == SMOL Twinning program <smol-twinning-program>
 

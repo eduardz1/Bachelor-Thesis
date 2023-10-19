@@ -1,6 +1,6 @@
 #import "utils/template.typ": *
 
-#let dichiarazione_di_originalità = "Dichiaro di essere responsabile del contenuto dell’elaborato che presento al fine del conseguimento del titolo, di non avere plagiato in tutto o in parte il lavoro prodotto da altri e di aver citato le fonti originali in modo congruente alle normative vigenti in materia di plagio e di diritto d’autore. Sono inoltre consapevole che nel caso la mia dichiarazione risultasse mendace, potrei incorrere nelle sanzioni previste dalla legge e la mia ammissione alla prova finale potrebbe essere negata."
+#let declaration_of_originality = "I declare to be responsible for the content I'm presenting in order to obtain the final degree, not to have plagiarized in all or part of, the work produced by others and having cited original sources in consistent way with current plagiarism regulations and copyright. I am also aware that in case of false declaration, I could incur in law penalties and my admission to final exam could be denied"
 
 #let aknowlegements = "Special thanks to Chinmayi Bp for always being available to help us figure out the electronics and Gianluca Barmina and Marco Amato with whom I worked together on the project"
 
@@ -8,7 +8,7 @@
   title: "Design and Development of the Digital Twin of a Greenhouse",
   abstract: "We will see how digital twins can be used and applied in a range of scenarios, we'll introduce the language 'SMOL', created specifically for this purpose, and talk about the work of me and my collegues in the process of designing and implementing a digital twin of a greenhouse.",
   aknowlegements: aknowlegements,
-  declaration-of-originality: dichiarazione_di_originalità,
+  declaration-of-originality: declaration_of_originality,
   affiliation: (
     university: "Università degli Studi di Torino",
     department: "DIPARTIMENTO DI INFORMATICA",

@@ -61,3 +61,20 @@ rr499:
   date: 2021-03
   isbn: 978-82-7368-464-6
   issn: 0806-3036
+
+protege:
+  type: Web
+  title: "Protégé"
+  url: "https://protege.stanford.edu/"
+
+rdf:
+  type: Web
+  title: "Resource Description Framework (RDF)"
+  url: "https://www.w3.org/RDF/"
+
+rdfandowl:
+  type: Web
+  title: "RDF and OWL"
+  url: "https://www.slideshare.net/rlovinger/rdf-and-owl"
+  author: "Rachel Lovinger"
+  date: 2007-12

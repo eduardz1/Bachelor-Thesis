@@ -1,0 +1,76 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/3/syntax.html
+name: Smol
+file_extensions:
+  - smol
+scope: source.smol
+contexts:
+  main:
+    - include: comments
+    - include: numbers
+    - include: strings
+    - include: operators
+    - include: constants
+    - include: keywords
+    - include: functions
+    - include: variables
+    - include: types
+  comments:
+    - match: //
+      push:
+        - meta_scope: comment.line.double-slash.smol
+        - match: \n
+          pop: true
+    - match: /\*
+      push:
+        - meta_scope: comment.block.smol
+        - match: \*/
+          pop: true
+  constants:
+    - match: \b(True|False|null|this|unit)\b
+      scope: constant.language.smol
+  functions:
+    - match: '\b([a-z]\w+)\s*(\(|\[)'
+      scope: meta.function.smol
+      captures:
+        "1": entity.name.function.smol
+  keywords:
+    - match: \b(if|then|else)\b
+      scope: keyword.control.conditional.smol
+    - match: \b(while|do|main|end)\b
+      scope: keyword.control.repeat.smol
+    - match: \b(return|skip|print|destroy|access|construct|member|simulate|validate|tick|breakpoint)\b
+      scope: keyword.control.statement.smol
+    - match: \b(new|super|abstract|class|extends|rule|override|private|protected|nonsemantic|models|domain|in|out)\b
+      scope: keyword.other.smol
+  numbers:
+    - match: '\b-?[0-9]+\b'
+      scope: constant.numeric.integer.smol
+    - match: '\b\-?[0-9]?\.[0-9]+((E|e)(\+|-)?[0-9]+)?\b'
+      scope: constant.numeric.float.smol
+  operators:
+    - match: <\=|>\=|\=\=|<|>|\!\=
+      scope: keyword.operator.comparison.smol
+    - match: \=
+      scope: keyword.operator.assignment.smol
+    - match: \+|\-|\*|/|%
+      scope: keyword.operator.arithmetic.smol
+    - match: '&|\||!'
+      scope: keyword.operator.logical.smol
+  strings:
+    - match: '"'
+      push:
+        - meta_scope: string.quoted.double.smol
+        - match: '"(?!")'
+          pop: true
+        - match: \\.
+          scope: constant.character.escape.smol
+  types:
+    - match: \b(Int|Double|Bool|String|FMO)\b
+      scope: class.smol
+  variables:
+    - match: '\b(this)\.([a-z]\w*)\b'
+      scope: meta.field.smol
+      captures:
+        "2": variable.field.smol

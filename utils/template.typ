@@ -1,7 +1,7 @@
 #let project(
   title: "",
   abstract: [],
-  aknowlegements: none,
+  acknowledgments: none,
   declaration-of-originality: none,
   affiliation: (),
   authors: (),
@@ -23,6 +23,11 @@
       h(1fr)
       it.page
     })
+  }
+  show outline.entry.where(
+    level: 3
+  ): it => {
+    text(size: 0.8em, it)
   }
 
   set page(
@@ -46,6 +51,12 @@
   // Configure raw text/code blocks
   show raw.where(block: true): set text(size: 0.8em, font: "FiraCode Nerd Font")
   show raw.where(block: true): set par(justify: false)
+  set raw(syntaxes: (
+    "../resources/syntaxes/smol.sublime-syntax",
+    "../resources/syntaxes/sparql.sublime-syntax",
+    "../resources/syntaxes/turtle.sublime-syntax",
+    )
+  )
   show raw.where(block: true): block.with(
     fill: luma(240),
     inset: 10pt,
@@ -59,6 +70,9 @@
     radius: 2pt,
   )
 
+  // Figures
+  show figure.caption: set text(size: 0.8em)
+
   // Configure lists and enumerations.
   set enum(indent: 10pt, body-indent: 9pt)
   set list(indent: 10pt, body-indent: 9pt, marker: ([•], [--]))
@@ -67,8 +81,8 @@
   set heading(numbering: "1.a.I")
   show heading.where(
     level: 1
-  ): it => block(width: 100%, height: 8%)[
-    #set align(center)
+  ): it => block(width: 100%, height: 20%)[
+    #set align(center + horizon)
     #set text(1.2em, weight: "bold")
     #smallcaps(it.body)
   ]
@@ -131,13 +145,14 @@
 
   v(2.4fr)
   pagebreak()
+  pagebreak()
 
-  // Aknowlegements
+  // acknowledgments
   v(1fr)
 
   set align(center)
-  heading(level: 2, numbering: none, outlined: false, "Aknowlegements")
-  aknowlegements
+  heading(level: 2, numbering: none, outlined: false, "acknowledgments")
+  acknowledgments
   v(0.2fr)
 
   set align(left)
@@ -154,6 +169,7 @@
   abstract
 
   v(1.618fr)
+  pagebreak()
   pagebreak()
 
   // Table of contents.

@@ -72,9 +72,29 @@ rdf:
   title: "Resource Description Framework (RDF)"
   url: "https://www.w3.org/RDF/"
 
+owl:
+  type: Web
+  title: "OWL Web Ontology Language"
+  url: "https://www.w3.org/OWL/"
+
 rdfandowl:
   type: Web
   title: "RDF and OWL"
   url: "https://www.slideshare.net/rlovinger/rdf-and-owl"
   author: "Rachel Lovinger"
   date: 2007-12
+
+webdam:
+  type: Web
+  title: "Webdam Project"
+  url: "http://webdam.inria.fr/Jorge/html/wdmch8.html"
+
+sparql:
+  type: Web
+  title: "SPARQL Query Language for RDF"
+  url: "https://www.w3.org/TR/rdf-sparql-query/"
+
+semanticobjects:
+  type: Repository
+  title: "Semantic Objects"
+  url: "https://github.com/smolang/SemanticObjects/"

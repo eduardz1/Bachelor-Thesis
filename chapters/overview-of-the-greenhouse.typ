@@ -3,10 +3,10 @@
 = Overview of the Greenhouse
 
 The specific greenhouse we're working on has the following characteristics:
-- It is divided in two shelves
-- Each shelf is composed by two groups of plants
+- It is divided into two shelves
+- Each shelf is composed of two groups of plants
 - Each group of plants is watered by a single water pump
-- Each group of plants is composed by two plants
+- Each group of plants is composed of two plants
 - Each plant is associated with a pot
 
 #_content(
@@ -22,5 +22,12 @@ The specific greenhouse we're working on has the following characteristics:
     - 1 capacitive soil moisture sensor used to measure the moisture of the soil
     / Plants:
     - 1 `Raspberry Pi Camera Module v2 NoIR` used to take pictures of the plants and measure their growth by calculating the `NDVI`
+
+    #figure(
+      image("../img/greenhouse.jpeg"),
+      caption: [
+        the bottom shelf of our greenhouse, not in the picture the router, host, and lights
+      ]
+    )
   ]
 )

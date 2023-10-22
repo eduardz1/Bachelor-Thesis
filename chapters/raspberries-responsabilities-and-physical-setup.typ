@@ -1,23 +1,60 @@
 #import "../utils/common.typ": *
 
-= Raspberry Responsabilities and Physical Setup
+= Raspberry Responsibilities and Physical Setup <raspberry-responsabilities-and-physical-setup>
 
-In our greenhouse we use a total of 4 Raspberry Pi 4 but in theory only one is strictly necessary.
-The responsibility that each pc has is as follows:
+In our greenhouse, we use a total of 4 Raspberry Pi 4 but in theory, only one is strictly necessary.
+The responsibility that each PC has is as follows:
 
 - a #link(<controller-setup>)[_Controller_]
 - an #link(<actuator-setup>)[_Actuator_]
 - a #link(<router-setup>)[Router]
 - a #link(<host-setup>)[Host]
 
-We will refer to the _Controller_ also as _Data Collector_ because its responsability is to collect data using sensors attached to the board and send the measurements to the time series database.
+We will refer to the _Controller_ also as _Data Collector_ because its responsibility is to collect data using sensors attached to the board and send the measurements to the time series database.
 
-In case one wants to repllicate our setup, one can use whichever computer they want as the host, these pharagraphs will assume the host computer runs a Debian based linux distribution but any OS should work with minimal changes.
+In case one wants to replicate our setup, one can use whichever computer they want as the host, these paragraphs will assume the host computer runs a Debian-based Linux distribution but any OS should work with minimal changes.
 
-The _Controller_ and _Actuator_ can be run on the same raspberry with minimal changes.
+The _Controller_ and _Actuator_ can be run on the same Raspberry with minimal changes.
 
-A more in depth guide to exactly replicate our setup was published #link("https://www.github.com/N-essuno/greenhouse_twin_project/physical-setup")[here] 
+A more in-depth guide to exactly replicate our setup was published #link("https://www.github.com/N-essuno/greenhouse_twin_project/physical-setup")[here].
 
+To make it easier to configure the Raspberry we wrote some bash scripts that make it easy to install the necessary dependencies with one click. For example to configure the Host @host-setup we can just run the following script that is written to be architecture-independent, given that the host computer does not need to interface with any sensor directly:
+
+```bash
+#!/bin/bash
+
+git clone https://www.github.com/N-essuno/smol_scheduler
+
+influxdbversion="2.7.3"
+arch=$(dpkg --print-architecture)
+
+# Checks the architecture and continues the setup only if arch is
+# either arm64 or amd64
+case "$arch" in
+amd64)
+    wget https://dl.influxdata.com/influxdb/releases/influxdb2-client-$influxdbversion-linux-amd64.tar.gz
+    tar xvzf influxdb2-client-$influxdbversion-linux-amd64.tar.gz
+    sudo cp influxdb2-client-$influxdbversion-linux-amd64/influx /usr/local/bin
+    ;;
+arm64)
+    wget https://dl.influxdata.com/influxdb/releases/influxdb2-client-$influxdbversion-linux-arm64.tar.gz
+    tar xvzf influxdb2-client-$influxdbversion-linux-arm64.tar.gz
+    sudo cp influxdb2-client-$influxdbversion-linux-arm64/influx /usr/local/bin
+    ;;
+*)
+    echo "Unsupported architecture: $arch"
+    exit 1
+    ;;
+esac
+
+# Sets up influxdb with the standard config tool
+influx setup
+
+exit 0
+
+```
+
+// TODO: check if the info commented is still relevant
 // / The Server: The host runs an `InfluxDB` instance that holds the data retried from the clients (_data collectors_) and a `Java` program that periodically runs the #link(<smol-twinning-program>)[`SMOL Twinning program`] which is responsible for creating the digital twin and running the FMI simulators.
 
 // / The Router: The Raspberry was configured with `hostapd` and `dnsmasq` to act as a router and provide a wireless network for the clients to connect to. The local network is used to access the client via `SSH` and to send data to the server via `HTTP` requests.
@@ -26,21 +63,21 @@ A more in depth guide to exactly replicate our setup was published #link("https:
   [
     == OS Choice
 
-    We used the, at the time, latest distribution of `Raspberry Pi OS 64bit`. Any compatible operating system will work in practice, but it's necessary to use a 64 bit distribution at least for the host computer. It is also recommended to have a desktop environment on the host computer for a simpler data analysis.
+    We used the, at the time, latest distribution of `Raspberry Pi OS 64bit`. Any compatible operating system will work in practice, but it's necessary to use a 64-bit distribution at least for the host computer. It is also recommended to have a desktop environment on the host computer for simpler data analysis.
 
-    We used and recommend using the #link("https://www.raspberrypi.com/software")[Raspberry Pi Imager] to mount the OS image on the micro-sd card.
+    We used and recommend using the #link("https://www.raspberrypi.com/software")[Raspberry Pi Imager] to mount the OS image on the microSD card.
 
     == Host Setup <host-setup>
 
-    The only thing that is necessary to install and configure on the host computer is an instance of InfluxDB. One also needs to clone the repository containing the #link("https://www.github.com/N-essuno/smol-scheduler")[SMOL scheduler].
+    The only thing that is necessary to install and configure on the host computer is an instance of InfluxDB, after that it's sufficient to clone the repository containing the #link("https://www.github.com/N-essuno/smol-scheduler")[SMOL scheduler].
 
     == Router Setup <router-setup>
 
-    We used a separate Raspberry Pi 4 as a router but that's not striclty necessary, one could simply use an off-the-shelf router for this purpose or give to the host also the responsability of being the wireless access point. For our purpose we used `hostapd` and `dnsmasq` but it can also be done via GUI on Raspberry Pi OS very easily, nonetheless in the guide aforementioned we provide a step by step tutorial.
+    We used a separate Raspberry Pi 4 as a router but that's not strictly necessary, one could simply use an off-the-shelf router for this purpose or give the host the responsibility of being the wireless access point. For our purpose we used `hostapd` and `dnsmasq` but it can also be done via GUI on Raspberry Pi OS very easily, nonetheless in the guide aforementioned we provide a step-by-step tutorial.
 
     == Controller Setup <controller-setup>
 
-    The datapoints from the sensors that it needs to manage are the following:
+    The data points from the sensors that it needs to manage are the following:
 
     - #link(<dht22>)[Temperature]
     - #link(<dht22>)[Humidity]
@@ -48,7 +85,7 @@ A more in depth guide to exactly replicate our setup was published #link("https:
     - #link(<light-level>)[Light Level]
     - #link(<ndvi>)[NDVI]
 
-    For the temperature and moisture we used a `DHT22` sensor, being very common results in a very good software support.
+    For the temperature and moisture, we used a `DHT22` sensor, which is very common and results in very good software support.
 
     === DHT22 <dht22>
 
@@ -66,7 +103,7 @@ import board
 import adafruit_dht
 
 # Initialize the dht device
-# Pass the GPIO pin it's connected to as arugument
+# Pass the GPIO pin it's connected to as an argument
 dhtDevice = adafruit_dht.DHT22(board.D4)
 
 try:
@@ -93,7 +130,7 @@ dhtDevice.exit()
 
     === Moisture <moisture>
 
-    We used a generic moisture capacitive soil moisture sensor, to convert the analogue signal we need to use an analog-to-digital converter. For our purpose we used the `MCP3008` ADC which features eight channels, thus making it possible to exend our setup with a decent number of other sensors (for example a PH-meter or a LUX-meter). The following schematics illustrate how we connected the ADC to the board and the moisture sensor to the adc.
+    We used a generic moisture capacitive soil moisture sensor, to convert the analog signal we need to use an analog-to-digital converter. For our purpose we used the `MCP3008` ADC which features eight channels, thus making it possible to extend our setup with a decent number of other sensors (for example a PH-meter or a LUX-meter). The following schematics illustrate how we connected the ADC to the board and the moisture sensor to the ADC.
 
     #image("../img/mcp3008-moisture-schematics.jpeg")
 
@@ -127,7 +164,7 @@ class MCP3008:
   def read(self, channel=0) -> float:
     adc = self.spi.xfer2([
       1, # speed in hertz
-      (8 + channel) << 4, # delay in micro seconds
+      (8 + channel) << 4, # delay in microseconds
       0 # bits per word
     ])
 
@@ -151,9 +188,9 @@ print("Applied voltage: %.2f" % value)
 
     === Light Level <light-level>
 
-    The unavailability of a LUX-meter meant we had to get creative and use a webcam to approximate the light level readings. This means that the data is only meaningful when compared to the first measurement. We used the library opencv to interface with the USB webcam beacuse it is better supported compared to picamera2.
+    The unavailability of a LUX meter meant we had to get creative and use a webcam to approximate the light level readings. This means that the data is only meaningful when compared to the first measurement. We used the library OpenCV to interface with the USB webcam because it is better supported compared to picamera2.
 
-    An minimal example of the scripts we used is the following:
+    A minimal example of the scripts we used is the following:
 
     ```python
 import cv2
@@ -162,7 +199,7 @@ from time import sleep
 
 cap = cv2.VideoCapture(0)
 
-sleep(2) #lets webcam adjust its exposure
+sleep(2) #lets the webcam adjust its exposure
 
 # Turn off automatic exposure compensation, 
 # this means that the measurements are only
@@ -192,16 +229,16 @@ cv2.destroyAllWindows()
       [
         #underline("What is it?")
 
-        Landsat Normalized Difference Vegetation Index (NDVI) is used to quantify vegetation greenness and is useful in understanding vegetation density and assessing changes in plant health.
-        NDVI is calculated as a ratio between the red (R) and near infrared (NIR) values in traditional fashion: @ndvidef
+        The Landsat Normalized Difference Vegetation Index (NDVI) is used to quantify vegetation greenness and is useful in understanding vegetation density and assessing changes in plant health.
+        NDVI is calculated as a ratio between the red (R) and near-infrared (NIR) values in traditional fashion: @ndvidef
 
         $ ("NIR" - "R") / ("NIR" + "R") $
       ]
     )
 
-    To better understand how healthy our plants were we decided to use an infrared camera to quantify the NDVI. In our small scale application the data were not too helpful because of the color noise surrounding the plants but it will work very well if used on a camera mounted on top of the plants and focussed in an area large enough that the image is filled with only vegetation.
+    To better understand how healthy our plants were we decided to use an infrared camera to quantify the NDVI. In our small-scale application, the data were not too helpful because of the color noise surrounding the plants but it will work very well if used on a camera mounted on top of the plants and focussed in an area large enough that the image is filled with only vegetation.
 
-    Connecting the camera is very straight forward given that we used the `Raspberry Pi NoIR` module.
+    Connecting the camera is very straightforward given that we used the `Raspberry Pi NoIR` module.
 
     The following is an extract of the class we use to calculate the index:
 
@@ -238,7 +275,7 @@ class NDVI:
     self.camera.start()
 
   def contrast_stretch(self, image):
-    """Increases contrast of image to facilitate 
+    """Increases contrast of the image to facilitate 
        NDVI calculation
     """
 
@@ -284,11 +321,11 @@ class NDVI:
 
     == Actuator Setup <actuator-setup>
 
-    In general to connect actuators (like pumps, light switches or fans) we can relay on a relay. To connect the relay we can refer to the following schematics:
+    In general, to connect actuators (like pumps, light switches, or fans) we can rely on a relay. To connect the relay we can refer to the following schematics:
 
     #image("../img/relay-pump-schematics.jpeg")
 
-    In our project we just conneted one pump but it's trivial to extend the project to multiple pumps (for example we plan to add one dedicated to pumping fertilized water) or other devices. An example of the code used to interact with the pump is the following:
+    In our project, we just connected one pump but it's trivial to extend the project to multiple pumps (for example we plan to add one dedicated to pumping fertilized water) or other devices. An example of the code used to interact with the pump is the following:
 
 
 ```python
@@ -324,15 +361,5 @@ def pump_water(sec, pump_pin):
         # stop pump when ctrl-c is pressed
         GPIO.cleanup()
 ```
-
-    == Putting it all Together
-
-    // FIXME: why is it rotated!!!?!?!?!?
-    #figure(
-      image("../img/greenhouse.jpeg"),
-      caption: [
-        the bottom shelf of our greenhouse, not in the picture the router, host and lights
-      ]
-    )
   ]
 )

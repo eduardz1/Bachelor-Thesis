@@ -17,7 +17,7 @@
   authors: (
     (role: "candidate", name: "Eduard Antonovic Occhipinti", id: "947847"),
     (role: "supervisor", name: "Prof. Ferruccio Damiani", id: ""),
-    (role: "co-supervisors", name: "Prof. Einar Broch Johnsen\n\nProf. Rudolf Schlatte\n\nProf. Eduard Kamburjan", id: "")
+    (role: "co-supervisors", name: "Prof. Einar Broch Johnsen\n\nDr. Rudolf Schlatte\n\nDr. Eduard Kamburjan", id: "")
   ),
   date: "Academic Year 2022/2023",
   logo: "../img/logo.svg",

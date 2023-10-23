@@ -84,21 +84,21 @@
   ): it => block(width: 100%, height: 20%)[
     #set align(center + horizon)
     #set text(1.2em, weight: "bold")
-    #smallcaps(it.body)
+    #smallcaps(it)
   ]
   show heading.where(
   level: 2
   ): it => block(width: 100%)[
     #set align(center)
     #set text(1.1em, weight: "bold")
-    #smallcaps(it.body)
+    #smallcaps(it)
   ]
   show heading.where(
   level: 3
   ): it => block(width: 100%)[
     #set align(left)
     #set text(1em, weight: "bold")
-    #smallcaps(it.body)
+    #smallcaps(it)
   ]
 
   // Affiliation

@@ -98,3 +98,35 @@ semanticobjects:
   type: Repository
   title: "Semantic Objects"
   url: "https://github.com/smolang/SemanticObjects/"
+
+fmi2.0:
+  type: Proceedings
+  title: "Functional Mockup Interface 2.0: The Standard for Tool independent Exchange of Simulation Models"
+  author: [Blochwitz, T. & Otter, Martin & Åkesson, Johan & Arnold, Martin & Clauss, Christoph & Elmqvist, Hilding & Friedrich, Markus & Junghanns, Andreas & Mauss, Jakob & Neumerkel, Dietmar & Olsson, Hans & Viel, Antoine]
+  date: 2012
+  doi: "10.3384/ecp12076173"
+
+fmi:
+  type: Proceedings
+  title: "The Potential of FMI for the Development of Digital Twins for Large Modular Multi-Domain Systems"
+  author: [Marcus Wiens, Tobias Meyer, Philipp Thomas]
+  date: 2021-09-27
+  doi: "10.3384/ecp21181235"
+
+dtnasa:
+  type: Proceedings
+  title: "The Digital Twin Paradigm for Future NASA and U.S. Air Force Vehicles"
+  author: [Edward H. Glaessgen, Doane Stargel]
+  date: 2012
+  url: "https://api.semanticscholar.org/CorpusID:110572580"
+
+cosim:
+  type: Article
+  doi: "10.1145/3179993"
+  author: [Gomes, Cláudio and Thule, Casper and Broman, David and Larsen, Peter Gorm and Vangheluwe, Hans]
+  title: "Co-Simulation: A Survey"
+  date: 2018
+  publisher: "Association for Computing Machinery"
+  volume: 51
+  issn: 0360-0300]
+  abstract: "Modeling and simulation techniques are today extensively used both in industry and science. Parts of larger systems are, however, typically modeled and simulated by different techniques, tools, and algorithms. In addition, experts from different disciplines use various modeling and simulation techniques. Both these facts make it difficult to study coupled heterogeneous systems.Co-simulation is an emerging enabling technique, where global simulation of a coupled system can be achieved by composing the simulations of its parts. Due to its potential and interdisciplinary nature, co-simulation is being studied in different disciplines but with limited sharing of findings.In this survey, we study and survey the state-of-the-art techniques for co-simulation, with the goal of enhancing future research and highlighting the main challenges.To study this broad topic, we start by focusing on discrete-event-based co-simulation, followed by continuous-time-based co-simulation. Finally, we explore the interactions between these two paradigms, in hybrid co-simulation.To survey the current techniques, tools, and research challenges, we systematically classify recently published research literature on co-simulation, and summarize it into a taxonomy. As a result, we identify the need for finding generic approaches for modular, stable, and accurate coupling of simulation units, as well as expressing the adaptations required to ensure that the coupling is correct."

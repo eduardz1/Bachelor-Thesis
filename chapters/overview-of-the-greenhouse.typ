@@ -13,15 +13,16 @@ The specific greenhouse we're working on has the following characteristics:
   [
     == Assets - Sensors
     The following sensors are used to monitor the environmental conditions of the greenhouse and the plants:
+    
+    #set par(justify: true, first-line-indent: 0em) // FIXME: workaround for https://github.com/typst/typst/issues/1050
+    / Greenhouse: 1 webcam used to measure the light level, can be replaced with a light sensor that would also provide an accurate lux measurement
 
-    / Greenhouse:
-    - 1 webcam used to measure the light level, can be replaced with a light sensor that would also provide an accurate lux measurement
-    / Shelves:
-    - 1 `DHT22` sensor used to measure the temperature and humidity
-    / Pots:
-    - 1 capacitive soil moisture sensor used to measure the moisture of the soil
-    / Plants:
-    - 1 `Raspberry Pi Camera Module v2 NoIR` used to take pictures of the plants and measure their growth by calculating the `NDVI`
+    / Shelves: 1 `DHT22` sensor used to measure the temperature and humidity
+
+    / Pots: 1 capacitive soil moisture sensor used to measure the moisture of the soil
+
+    / Plants: 1 `Raspberry Pi Camera Module v2 NoIR` used to take pictures of the plants and measure their growth by calculating the `NDVI`
+    #set par(justify: true, first-line-indent: 1em)
 
     #figure(
       image("../img/greenhouse.jpeg"),

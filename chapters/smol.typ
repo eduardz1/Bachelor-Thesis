@@ -18,10 +18,7 @@ Details on the implementation can be found in the #link(<smol-twinning-program>)
     SMOL goes beyond what would be achievable by extending any traditional language by incorporating FMUs as Functional Mock-Up Objects in its runtime.
 
     == Co-Simulation <co-simulation>
-    
-
-
-    == MAPE-K
+    // TODO:
 
   
     == Semantical Lifting

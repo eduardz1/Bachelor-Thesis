@@ -130,3 +130,13 @@ cosim:
   volume: 51
   issn: 0360-0300]
   abstract: "Modeling and simulation techniques are today extensively used both in industry and science. Parts of larger systems are, however, typically modeled and simulated by different techniques, tools, and algorithms. In addition, experts from different disciplines use various modeling and simulation techniques. Both these facts make it difficult to study coupled heterogeneous systems.Co-simulation is an emerging enabling technique, where global simulation of a coupled system can be achieved by composing the simulations of its parts. Due to its potential and interdisciplinary nature, co-simulation is being studied in different disciplines but with limited sharing of findings.In this survey, we study and survey the state-of-the-art techniques for co-simulation, with the goal of enhancing future research and highlighting the main challenges.To study this broad topic, we start by focusing on discrete-event-based co-simulation, followed by continuous-time-based co-simulation. Finally, we explore the interactions between these two paradigms, in hybrid co-simulation.To survey the current techniques, tools, and research challenges, we systematically classify recently published research literature on co-simulation, and summarize it into a taxonomy. As a result, we identify the need for finding generic approaches for modular, stable, and accurate coupling of simulation units, as well as expressing the adaptations required to ensure that the coupling is correct."
+
+mapek:
+  type: Proceedings
+  author: [Arcaini, Paolo and Riccobene, Elvinia and Scandurra, Patrizia]
+  title: "Modeling and Analyzing MAPE-K Feedback Loops for Self-Adaptation"
+  date: 2015
+  doi: "10.1109/SEAMS.2015.10"
+  parent:
+    type: Book
+    title: "2015 IEEE/ACM 10th International Symposium on Software Engineering for Adaptive and Self-Managing Systems"

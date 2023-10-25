@@ -312,7 +312,6 @@ end
 
     To collect data from the sensors connected to the greenhouse we wrote a Python program that retrieves the data and uploads them to InfluxDB.
 
-    // TODO: remove link to personal repo
     The repository can be found at https://github.com/N-essuno/greenhouse-data-collector.
 
     The project is organized as follows:
@@ -687,7 +686,7 @@ class Interpreter:
 
     == Actuators Script
 
-    As a separate project, we have created a Python module that serves to run the various scripts for the actuators. Actuators can be pumps (for watering or fertilizing), can be electronic switches for the lights, can be fans for air circulation ecc...
+    As a separate project, we have created a Python module that serves to run the various scripts for the actuators. Actuators can be pumps (for watering or fertilizing), can be electronic switches for the lights, can be fans for air circulation, etc...
 
     Being separated into a separate module makes it so that the actuators can be run remotely from the server running the SMOL scheduler.
 

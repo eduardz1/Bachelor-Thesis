@@ -59,7 +59,7 @@ from(bucket: "greenhouse")
     - Map the program state to a knowledge graph through semantic lifting, the program state can be then queried to extract information about the state of the system
     - Represent and run the simulation and interact with `Modelica`
     
-    It will be treated in more detail in its dedicated section.
+    It will be treated in more detail in @smol-heading.
 
     SMOL programs are compiled to Java bytecode and run on the JVM.
 

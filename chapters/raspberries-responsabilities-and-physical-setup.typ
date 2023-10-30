@@ -1,6 +1,6 @@
 #import "../utils/common.typ": *
 
-= Raspberry Responsibilities and Physical Setup <raspberry-responsabilities-and-physical-setup>
+= Raspberry Pi Responsibilities and Physical Setup <raspberry-responsabilities-and-physical-setup>
 
 In our greenhouse, we use a total of 4 Raspberry Pi 4 but in theory, only one is strictly necessary.
 The responsibility that each PC has is as follows:
@@ -12,13 +12,13 @@ The responsibility that each PC has is as follows:
 
 We will refer to the _Controller_ also as _Data Collector_ because its responsibility is to collect data using sensors attached to the board and send the measurements to the time series database.
 
-In case one wants to replicate our setup, one can use whichever computer they want as the host, these paragraphs will assume the host computer runs a Debian-based Linux distribution but any OS should work with minimal changes.
+In case one wants to replicate our setup, any computer can be used as the host machine, these paragraphs will assume the host runs a Debian-based Linux distribution but any major OS should work with minimal changes.
 
 The _Controller_ and _Actuator_ can be run on the same Raspberry with minimal changes.
 
-A more in-depth guide to exactly replicate our setup was published #link("https://www.github.com/N-essuno/greenhouse_twin_project/physical-setup")[here].
+A more in-depth guide to exactly replicate our setup was published at https://github.com/N-essuno/greenhouse_twin_project/tree/main/physical-setup.
 
-To make it easier to configure the Raspberry we wrote some bash scripts that make it easy to install the necessary dependencies with one click. For example to configure the Host @host-setup we can just run the following script that is written to be architecture-independent, given that the host computer does not need to interface with any sensor directly:
+To make it easier to configure the Raspberry Pis we wrote some bash scripts that make it easy to install the necessary dependencies with one click. For example to configure the host (see @host-setup) we can just run the following script that is written to be architecture-independent, given that the host computer does not need to interface with any sensor directly:
 
 ```bash
 #!/bin/bash
@@ -65,11 +65,11 @@ exit 0
 
     We used the, at the time, latest distribution of `Raspberry Pi OS 64bit`. Any compatible operating system will work in practice, but it's necessary to use a 64-bit distribution at least for the host computer. It is also recommended to have a desktop environment on the host computer for simpler data analysis.
 
-    We used and recommend using the #link("https://www.raspberrypi.com/software")[Raspberry Pi Imager] to mount the OS image on the microSD card.
+    We used, and recommend using the #link("https://www.raspberrypi.com/software")[Raspberry Pi Imager] to mount the OS image on the microSD card.
 
     == Host Setup <host-setup>
 
-    The only thing that is necessary to install and configure on the host computer is an instance of InfluxDB, after that it's sufficient to clone the repository containing the #link("https://www.github.com/N-essuno/smol-scheduler")[SMOL scheduler].
+    The only thing that is necessary to install and configure on the host computer is an instance of InfluxDB, after that, it's sufficient to clone the repository containing the #link("https://www.github.com/N-essuno/smol-scheduler")[SMOL scheduler].
 
     == Router Setup <router-setup>
 
@@ -77,7 +77,7 @@ exit 0
 
     == Controller Setup <controller-setup>
 
-    The data points from the sensors that it needs to manage are the following:
+    The data points from the sensors that the controller needs to manage are the following:
 
     - #link(<dht22>)[Temperature]
     - #link(<dht22>)[Humidity]
@@ -85,7 +85,7 @@ exit 0
     - #link(<light-level>)[Light Level]
     - #link(<ndvi>)[NDVI]
 
-    For the temperature and moisture, we used a `DHT22` sensor, which is very common and results in very good software support.
+    For the temperature and moisture, we used a `DHT22` sensor, which is very common and that reflects in very good software support.
 
     === DHT22 <dht22>
 
@@ -130,11 +130,11 @@ dhtDevice.exit()
 
     === Moisture <moisture>
 
-    We used a generic moisture capacitive soil moisture sensor, to convert the analog signal we need to use an analog-to-digital converter. For our purpose we used the `MCP3008` ADC which features eight channels, thus making it possible to extend our setup with a decent number of other sensors (for example a PH-meter or a LUX-meter). The following schematics illustrate how we connected the ADC to the board and the moisture sensor to the ADC.
+    We used a generic capacitive soil moisture sensor, to convert the analog signal we need to use an analog-to-digital converter. For our purpose we used the `MCP3008` ADC which features eight channels, thus making it possible to extend our setup with a decent number of other sensors (for example a PH-meter or a LUX-meter). The following schematics illustrate how we connected the ADC to the board and the moisture sensor to the ADC.
 
     #image("../img/mcp3008-moisture-schematics.jpeg")
 
-    We used `SpiDev` as the library to communicate with the ADC, the following class aids in the readout of the connected sensor:
+    We used `SpiDev` as the library of choice to communicate with the ADC, the following class aids in the readout of the connected sensor:
 
     // TODO: understand all the bitwise fuckery
 
@@ -188,7 +188,7 @@ print("Applied voltage: %.2f" % value)
 
     === Light Level <light-level>
 
-    The unavailability of a LUX meter meant we had to get creative and use a webcam to approximate the light level readings. This means that the data is only meaningful when compared to the first measurement. We used the library OpenCV to interface with the USB webcam because it is better supported compared to picamera2.
+    The unavailability of a LUX meter meant we had to get creative and use a webcam to approximate the light level readings. This means that the data is only meaningful when compared to the first measurement. We used the `OpenCV` library to interface with the USB webcam due to it being better supported compared to `picamera2`, another popular library used for similar contexts.
 
     A minimal example of the scripts we used is the following:
 
@@ -225,10 +225,7 @@ cv2.destroyAllWindows()
 
     === NDVI <ndvi>
 
-    #_block(
-      [
-        #underline("What is it?")
-
+    #_block(title: "What is NDVI?", text: [
         The Landsat Normalized Difference Vegetation Index (NDVI) is used to quantify vegetation greenness and is useful in understanding vegetation density and assessing changes in plant health.
         NDVI is calculated as a ratio between the red (R) and near-infrared (NIR) values in traditional fashion: @ndvidef
 
@@ -324,6 +321,7 @@ class NDVI:
     In general, to connect actuators (like pumps, light switches, or fans) we can rely on a relay. To connect the relay we can refer to the following schematics:
 
     #image("../img/relay-pump-schematics.jpeg")
+    #v(600pt) /* FIXME: remove once issue #466 is implemented */
 
     In our project, we just connected one pump but it's trivial to extend the project to multiple pumps (for example we plan to add one dedicated to pumping fertilized water) or other devices. An example of the code used to interact with the pump is the following:
 

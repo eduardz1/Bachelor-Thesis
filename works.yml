@@ -140,3 +140,38 @@ mapek:
   parent:
     type: Book
     title: "2015 IEEE/ACM 10th International Symposium on Software Engineering for Adaptive and Self-Managing Systems"
+
+semanticweb:
+  type: Web
+  title: "Semantic Web"
+  url: "https://www.w3.org/standards/semanticweb/"
+
+influxdb:
+  type: Web
+  title: "InfluxDB"
+  url: "https://www.influxdata.com/products/influxdb-overview/"
+
+influxdb-wiki:
+  type: Web
+  title: "InfluxDB Wikipedia Page"
+  url: "https://en.wikipedia.org/wiki/InfluxDB"
+
+chronograf:
+  type: Repository
+  title: "Chronograf"
+  url: "https://github.com/influxdata/chronograf"
+
+chronograf-img:
+  type: Misc
+  title: "Chronograf"
+  url: "https://www.influxdata.com/wp-content/uploads/chronograf.png"
+
+turtle:
+  type: Web
+  title: "Turtle Language"
+  url: "https://www.w3.org/TR/turtle/"
+
+raspberry-pi-wiki:
+  type: Web
+  title: "Raspberry Pi Wikipedia Page"
+  url: "https://en.wikipedia.org/wiki/Raspberry_Pi"

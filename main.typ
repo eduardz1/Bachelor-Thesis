@@ -5,13 +5,19 @@
 ]
 
 #let acknowledgments = [
-  I would like to express my gratitude to all the friends with whom I shared this journey and many long study sessions during these three years. Special thanks to Chinmayi Bp for always being available to help us during the internship to figure out the electronics and Gianluca Barmina and Marco Amato with whom I worked on the project
+  I would like to express my gratitude to all the friends with whom I shared this journey and many long study sessions during these three years. Special thanks to Chinmayi Baramashetru for always being available to help us during the internship to figure out the electronics and Gianluca Barmina and Marco Amato with whom I worked on the project
 ]
 
 #show: project.with(
   title: "Design and Development of the Digital Twin of a Greenhouse",
   abstract: [
     In this thesis we will talk about what digital twins are and how they can be used in a range of scenarios, we will introduce some concepts of the Semantic Web that will serve as a basis for our work. We will also introduce a novel programming language, SMOL, developed to facilitate the way to interface with digital twins. We will talk about the work of myself and my colleagues in the process of building the physical twin with a focus on the structure and the way the responsibilities of the different components are modularized. Finally, we will talk about the software components that we wrote as part of this project, including the code to interact with the sensors and the actuators - with a focus on the Python code and the way it's structured - and the SMOL code that serves as a proof of concept for the automation of the greenhouse.
+  ],
+  keywords: [
+    Digital Twins,
+    Raspberry Pi,
+    SMOL,
+    Python
   ],
   acknowledgments: acknowledgments,
   declaration-of-originality: declaration_of_originality,
@@ -31,6 +37,7 @@
 )
 
 #show link: underline
+#counter(page).update(1)
 
 #include "chapters/introduction.typ"
 #pagebreak()

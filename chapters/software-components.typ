@@ -381,7 +381,7 @@ end
     
     In the `test` folder there are some tests that verify the correct functionality of the program.
 
-    === The Collector Module
+    === The Collector Module <collector-module>
 
     The program is structured as a Python module. The main module is the `collector` module. It contains the `__main__.py` file which is the entry point of the program. It also contains the `config.py` file that is responsible for reading the configuration file and making it available to the rest of the program. The configuration file is in a `.ini` format, in the main module we include an example file that can be used as a template. The configuration file enables the user to configure the following parameters:
 
@@ -543,7 +543,7 @@ class ShelfAsset(Asset):
 
     This way of structuring the Asset classes makes it very easy to extend the program to support new assets.
 
-    === Influx
+    === Influx <influx-python>
 
     The `influx` module is a wrapper around the `influxdb_client` library. It contains a class `InfluxController` that is responsible for creating the client and the bucket and for writing points to the database.
 

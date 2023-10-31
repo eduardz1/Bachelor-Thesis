@@ -8,7 +8,7 @@ In this chapter, we will explore the tools and technologies used in the project.
   [
     == InfluxDB <influxdb-section>
 
-    InfluxDB @influxdb is a powerful open-source time-series database that in our context is used to store the data collected by the _data collectors_ (see /* TODO: link a data collectors section */). It is designed to handle high volume and high frequency time-stamped data and provides a SQL-like language with specific time-centric functions useful for querying a data structure primarily composed of measurements, streams of data, and points @influxdb-wiki. Being a NoSQL database, it is schemaless and it allows for a flexible data model.
+    InfluxDB @influxdb is a powerful open-source time-series database that in our context is used to store the data collected by the _data collectors_ (see @influx-python). It is designed to handle high volume and high frequency time-stamped data and provides a SQL-like language with specific time-centric functions useful for querying a data structure primarily composed of measurements, streams of data, and points @influxdb-wiki. Being a NoSQL database, it is schemaless and it allows for a flexible data model.
 
     InfluxDB is also directly integrated with the SMOL language, in the `access` expression (see @smol-twinning-program for an example of how we use it in practice), an InfluxDB query with a single answer variable can be directly executed on an external database without the need for external tooling. 
 

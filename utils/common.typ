@@ -1,6 +1,6 @@
 #let _block(title: "", text: []) = box(
-  fill: luma(240),
-  stroke: 2pt + luma(240),
+  fill: gradient.linear(luma(240), luma(245)),
+  stroke: 2pt + gradient.linear(luma(240), luma(245)),
   radius: 4pt,
 )[
   #block(
@@ -11,7 +11,7 @@
     #emph(title)
   ]
   #block(
-    fill: luma(240),
+    fill: gradient.linear(luma(240), luma(245)),
     inset: (x: 10pt, bottom: 10pt),
     text
   )

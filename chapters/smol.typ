@@ -8,7 +8,7 @@ SMOL uses _Functional Mock-Up Objects_ (FMOs) as a programming layer to encapsul
 
 The project is in its early stages of development, during our internship one of our objectives was to demonstrate the capabilities of the language and help with its development by being some of the first users and submitting issues (and eventually fixes) when they arise on the main repository.
 
-Details on our usage of the language can be found in @smol-twinning-program.
+Details on our uusage of the language can be found in @smol-twinning-program.
 
 #_content(
   [

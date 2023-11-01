@@ -36,7 +36,12 @@ In this chapter, we will explore the tools and technologies used in the project.
     Chronograf @chronograf is a web application included in the InfluxDB 2.0 package, it is the tool that we chose to visualize the data stored in the database and to create dashboards. It can be also used to create alerts and automation rules.
     
     #figure(
-      image("../img/chronograf.png"),
+      block(
+        radius: 4pt,
+        stroke: 0pt + red, // FIXME: https://github.com/typst/typst/issues/2533
+        clip: true,
+        image("../img/chronograf.jpg"),
+      ),
       caption: [
         An example of the visualization tools offered by the Chronograf Dashboard @chronograf-img
       ]
@@ -102,10 +107,10 @@ In this chapter, we will explore the tools and technologies used in the project.
     we can more concisely write `<owl:ObjectProperty>` and define the namespace `owl` as:
 
     ```turtle
-    @prefix owl: <http://www.w3.org/2002/07/owl#> .`
+    @prefix owl: <http://www.w3.org/2002/07/owl#> .
     ```
 
-    by defining it at the top of the Turtle document, #v(600pt) /* FIXME: remove once issue #466 is implemented */the aforementioned is a language used to write down RDF graphs in a compact textual form @turtle.
+    by defining it at the top of the Turtle document, the aforementioned is a language used to #v(600pt) /* FIXME: remove once issue #466 is implemented */write down RDF graphs in a compact textual form @turtle.
 
     == OWL
 
@@ -127,13 +132,15 @@ In this chapter, we will explore the tools and technologies used in the project.
         
     SELECT ?plantId ?idealMoisture
     WHERE {
-        ?plant rdf:type ast:Plant ;
-            ast:hasPlantId ?plantId ;
-            ast:hasIdealMoisture ?idealMoisture .
+      ?plant rdf:type ast:Plant ;
+        ast:hasPlantId ?plantId ;
+        ast:hasIdealMoisture ?idealMoisture .
     }
     ```
 
     In the query, we prefix variables with a question mark `?`.
+
+    #v(600pt) /* FIXME: remove once issue #466 is implemented */
 
     == Protégé
 
@@ -144,7 +151,12 @@ In this chapter, we will explore the tools and technologies used in the project.
     Protégé fully supports the OWL 2 Web Ontology Language and RDF specifications and that made it the tool of choice for the project, #v(600pt) /* FIXME: remove once issue #466 is implemented */the following is an image of the interface in which we can see details about the Basilicum class and related instances.
 
     #figure(
-      image("../img/protege.png")
+      block(
+        radius: 4pt,
+        stroke: 0pt + red, // FIXME: https://github.com/typst/typst/issues/2533
+        clip: true,
+        image("../img/protege.png")
+      )
     )
   ]
 )

@@ -1,6 +1,6 @@
 #let _block(title: "", text: []) = box(
-  fill: gradient.linear(luma(240), luma(245)),
-  stroke: 2pt + gradient.linear(luma(240), luma(245)),
+  fill: gradient.linear(luma(240), luma(245), angle: 270deg),
+  stroke: 2pt + gradient.linear(luma(240), luma(245), angle: 270deg),
   radius: 4pt,
 )[
   #block(
@@ -11,9 +11,9 @@
     #emph(title)
   ]
   #block(
-    fill: gradient.linear(luma(240), luma(245)),
+    fill: gradient.linear(luma(240), luma(245), angle: 270deg),
     inset: (x: 10pt, bottom: 10pt),
-    text
+    text,
   )
 ]
 
@@ -24,13 +24,3 @@
   ])
   pagebreak()
 }
-
-// cannot be used everywhere because it bugs when used in conjunction with raw boxes
-#let _balanced_content(cols: 2, body) = layout(
-  size => style(
-    style => {
-      let blocksize = measure(block(width: size.width, columns(cols, body)), style)
-      block(height: blocksize.height / cols, columns(cols, body))
-    },
-  ),
-)

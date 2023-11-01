@@ -23,23 +23,27 @@
     paper: paper-size,
     margin: (right: 3cm, left: 3.5cm, top: 3.5cm, bottom: 3.5cm),
   )
-
+  
   // Outline customization
   show outline.entry.where(level: 1): it => {
+    if it.body != [References] {
     v(12pt, weak: true)
     link(it.element.location(), strong({
       it.body
       h(1fr)
       it.page
-    }))
+    }))}
+    else {
+      text(size: 1em, it)
+    }
   }
   show outline.entry.where(level: 3): it => {
     text(size: 0.8em, it)
   }
-
+  
   // Configure equation numbering and spacing.
   show math.equation: set block(spacing: 0.65em)
-
+  
   // Configure raw text/code blocks
   show raw.where(block: true): set text(size: 0.8em, font: "FiraCode Nerd Font")
   show raw.where(block: true): set par(justify: false)
@@ -48,21 +52,26 @@
     "../resources/syntaxes/sparql.sublime-syntax",
     "../resources/syntaxes/turtle.sublime-syntax",
   ))
-  show raw.where(block: true): block.with(fill: gradient.linear(luma(240), luma(245)), inset: 10pt, radius: 4pt, width: 100%)
+  show raw.where(block: true): block.with(
+    fill: gradient.linear(luma(240), luma(245), angle: 270deg),
+    inset: 10pt,
+    radius: 4pt,
+    width: 100%,
+  )
   show raw.where(block: false): box.with(
-    fill: gradient.linear(luma(240), luma(245)),
+    fill: gradient.linear(luma(240), luma(245), angle: 270deg),
     inset: (x: 3pt, y: 0pt),
     outset: (y: 3pt),
     radius: 2pt,
   )
-
+  
   // Figures
   show figure.caption: set text(size: 0.8em)
-
+  
   // Configure lists and enumerations.
   set enum(indent: 10pt, body-indent: 9pt)
   set list(indent: 10pt, body-indent: 9pt, marker: ([•], [--]))
-
+  
   // Configure headings.
   set heading(numbering: "1.a.I")
   show heading.where(level: 1): it => block(width: 100%, height: 20%)[
@@ -80,57 +89,50 @@
     #set text(1em, weight: "bold")
     #smallcaps(it)
   ]
-
+  
   // Title page
   set align(center)
-
   [
-    #text(1.5em, weight: "bold", [
-      #affiliation.university
-    ]) \
-    #text(1.27em, [
-      #affiliation.school \
-      #affiliation.degree
-    ])
+    #text(1.5em, weight: "bold", affiliation.university) \
+    #text(1.2em, spacing: 182%, affiliation.school) \
+    #text(1.2em, spacing: 213%, affiliation.degree)
   ]
-
-  v(20pt)
+  
+  v(30pt)
   image(logo, width: 40%)
-  v(20pt)
-
+  v(30pt)
+  
   text(1.5em, subtitle)
   v(1em, weak: true)
   text(2em, weight: 700, title)
-  v(1.2em)
-
+  v(40pt)
+  
   grid(columns: 2, gutter: 14em, [
     #set align(left)
-
+    
     #smallcaps("supervisor") \
-    *#supervisor*
-
-    \
-
+    *#supervisor* \ \
+    
     #smallcaps("co-supervisors") \
     *#cosupervisor*
   ], [
     #set align(left)
-
-    #v(120pt)
+    
+    \ \ \ \
     #smallcaps("candidate") \
     *#candidate.name* \
     #candidate.id
   ])
-
-  v(3em)
-  text(1.27em, date)
-
+  
+  v(53pt)
+  text(1.2em, date)
+  
   set par(justify: true, first-line-indent: 1em)
   pagebreak()
   pagebreak()
-
+  
   set align(center + horizon)
-
+  
   // Declaration of originality
   heading(
     level: 2,
@@ -139,39 +141,39 @@
     "Declaration of Originality",
   )
   text(style: "italic", [
-    "#declaration-of-originality"
+    “#declaration-of-originality”
   ])
-
+  
   pagebreak()
-
+  
   // acknowledgments
   heading(level: 2, numbering: none, outlined: false, "acknowledgments")
   acknowledgments
-
+  
   pagebreak()
-
+  
   // Abstract
   counter(page).update(0)
   heading(level: 2, numbering: none, "Abstract")
   abstract
   heading(level: 2, numbering: none, outlined: false, "Keywords")
   keywords
-
+  
   pagebreak()
   pagebreak()
-
+  
   // Table of contents.
   outline(depth: 3, indent: true)
   pagebreak()
   pagebreak()
-
+  
   // Main body
   set page(numbering: "1")
   set align(top + left)
   body
-
+  
   pagebreak()
-
+  
   // Bibliography
   if bibliography-file != none {
     show bibliography: set text(0.9em)

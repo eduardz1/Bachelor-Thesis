@@ -170,7 +170,7 @@ chronograf:
 chronograf-img:
   type: Misc
   title: "Chronograf"
-  url: "https://www.influxdata.com/wp-content/uploads/chronograf.png"
+  url: "https://connect.adfab.fr/wp-content/uploads/2016/09/chronograf.jpg"
 
 turtle:
   type: Web

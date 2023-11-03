@@ -74,11 +74,22 @@
   
   // Configure headings.
   set heading(numbering: "1.a.I")
-  show heading.where(level: 1): it => block(width: 100%, height: 20%)[
-    #set align(center + horizon)
-    #set text(1.2em, weight: "bold")
-    #smallcaps(it)
-  ]
+  show heading.where(level: 1): it => {
+    if it.body != [References] {
+      block(width: 100%, height: 20%)[
+        #set align(center + horizon)
+        #set text(1.3em, weight: "bold")
+        #smallcaps(it)
+      ]
+    } else {
+      block(width: 100%, height: 10%)[
+        #set align(center + horizon)
+        #set text(1.1em, weight: "bold")
+        #smallcaps(it)
+      ]
+    
+    }
+  }
   show heading.where(level: 2): it => block(width: 100%)[
     #set align(center)
     #set text(1.1em, weight: "bold")
@@ -117,8 +128,8 @@
     *#cosupervisor*
   ], [
     #set align(left)
+    \ \ \
     
-    \ \ \ \
     #smallcaps("candidate") \
     *#candidate.name* \
     #candidate.id
@@ -147,7 +158,7 @@
   pagebreak()
   
   // acknowledgments
-  heading(level: 2, numbering: none, outlined: false, "acknowledgments")
+  heading(level: 2, numbering: none, outlined: false, "Acknowledgments")
   acknowledgments
   
   pagebreak()
@@ -176,7 +187,8 @@
   
   // Bibliography
   if bibliography-file != none {
+    heading(level: 1, numbering: none, "References")
     show bibliography: set text(0.9em)
-    bibliography(bibliography-file, title: "References")
+    bibliography(bibliography-file, title: none)
   }
 }

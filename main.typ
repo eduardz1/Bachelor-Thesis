@@ -10,30 +10,30 @@
 ]
 
 #let acknowledgments = [
-  I would like to thank my supervisor, prof. Ferruccio Damiani, and the team at
-  the research laboratory in Oslo, in particular the prof. Einar Broch Johnsen,
-  dr. Rudolf Schlatte and dr. Eduard Kamburjan, for grating me the opportunity to
+  I would like to thank my supervisor, Prof. Ferruccio Damiani, and the team at
+  the research laboratory in Oslo, in particular the Prof. Einar Broch Johnsen,
+  Dr. Rudolf Schlatte and Dr. Eduard Kamburjan, for giving me the opportunity to
   work on this project and for the support they provided me during the internship.
-  A special note of appeciation goes to Chinmayi Baramashetru for always being
+  A special note of appreciation goes to Chinmayi Baramashetru for always being
   available to help us during the internship to figure out the electronics and
   Gianluca Barmina and Marco Amato with whom I collaborated closely on this
   project.
   
   I express my gratitude to all the friends who shared this journey and many long
   study sessions over these three years with me. I am sure a big part of my
-  achievements is to be attributed to them. In particular Miriam Lamari, that has
-  been and still is always inviting us to study together, Marco Molica that I had
-  great pleasure studying and working with in several assignments, and Dennis
-  Gobbi that always pushed me to do my best and has always been available to
+  achievements is to be attributed to them. In particular, Miriam Lamari, who has
+  been and still is always inviting us to study together, Marco Molica whom I had
+  great pleasure studying and working with on several assignments, and Dennis
+  Gobbi who always pushed me to do my best and has always been available to
   explain concepts I had trouble with. I would also like to thank the friends from
-  Oslo that really contributed in making my last semester at UniTO memorable.
+  Oslo who contributed to making my last semester at UniTO memorable.
   
-  Finally I give an heartfelt thanks to my mother for always supporting me
-  throughout the studies.
+  Finally, I give a heartfelt thanks to my mother for always supporting me
+  throughout the studies and to my sister for helping me proofread my thesis.
 ]
 
 #let abstract = [
-  In this thesis we will talk about what digital twins are and how they can be
+  In this thesis, we will talk about what digital twins are and how they can be
   used in a range of scenarios, we will introduce some concepts of the Semantic
   Web that will serve as a basis for our work. We will also introduce a novel
   programming language, SMOL, developed to facilitate the way to interface with

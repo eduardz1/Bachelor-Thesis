@@ -63,7 +63,7 @@ In this chapter, we will explore the tools and technologies used in the project.
     - Interact with the Influx Database and read data from it, directly without the need for third-party libraries.
     - Read and query the asset model (that we discuss in @asset-model), mapping the data to objects in the heap.
     - Map the program state to a knowledge graph through semantic lifting (a concept that will be further discussed in @semantical-lifting), the program state can be then queried to extract information about the state of the system.
-    - Represent and run the simulation and interact with FMU simulation files, something that we didn't cover in this project but is the next logical step that should be taken. In @fmi-section we briefly will cover the theory behind FMUs.
+    - Represent and run the simulation and interact with FMU simulation files, something that we didn't cover in this project but is the next logical step that should be taken. In @fmi-section we will briefly cover the theory behind FMUs.
 
     SMOL programs are compiled to Java bytecode and can be run natively on the JVM.
 

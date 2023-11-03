@@ -7,7 +7,7 @@
   ],
 )
 
-A digital twin is a live replica of a Physical System and is connected to it in real-time. An ontology-based asset model is often used to connect the state of the DT (Digital Twin) with the PT (Physical Twin) (see @dtschema). Digital Twins are meant as tools to understand and control assets in nature, industry, or society at large, they are meant to adapt as the underlying assets evolve with time @smol. They are categorized into three distinct definitions depending on their level of integration with each being encapsulated into the next @fmi:
+A digital twin is a live replica of a Physical System and is connected to it in real time. An ontology-based asset model is often used to connect the state of the DT (Digital Twin) with the PT (Physical Twin) (see @dtschema). Digital Twins are meant as tools to understand and control assets in nature, industry, or society at large, they are meant to adapt as the underlying assets evolve with time @smol. They are categorized into three distinct definitions depending on their level of integration with each being encapsulated into the next @fmi:
 
 #set par(justify: true, first-line-indent: 0em) // FIXME: workaround for https://github.com/typst/typst/issues/1050
 / Digital Model: acts as a digital copy of an existing model or system, changes in the digital copy do not affect the physical system.

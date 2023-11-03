@@ -25,7 +25,7 @@ The specific greenhouse we're working on has the following characteristics:
   / Pots: each pot has one capacitive soil moisture sensor used to measure the 
     moisture of the soil.
   
-  / Plants: a `Raspberry Pi Camera Module v2 NoIR` is used to take pictures of the 
+  / Plants: one `Raspberry Pi Camera Module v2` `NoIR` is used to take pictures of the 
     plants and measure their growth by calculating the `NDVI` (see @ndvi).
   #set par(justify: true, first-line-indent: 1em)
   

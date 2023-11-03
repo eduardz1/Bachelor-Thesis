@@ -1,6 +1,6 @@
 #import "../utils/common.typ": *
 
-= Raspberry Pi Responsibilities and Physical Setup <raspberry-responsabilities-and-physical-setup>
+= Raspberry Pi's Responsibilities and Physical Setup <raspberry-responsabilities-and-physical-setup>
 
 In our greenhouse, we use a total of 4 Raspberry Pi 4 but in theory, only one is
 strictly necessary. The responsibility that each PC has is as follows:
@@ -90,10 +90,11 @@ exit 0
   
   We used a separate Raspberry Pi 4 as a router but that's not strictly necessary,
   one could simply use an off-the-shelf router for this purpose or give the host
-  the responsibility of being the wireless access point. For our purpose we used
-  `hostapd` and `dnsmasq` but it can also be done via GUI on Raspberry Pi OS very
-  easily, nonetheless in the guide aforementioned we provide a step-by-step
-  tutorial.
+  the responsibility of being the wireless access point. The local network is used
+  to enable communication through SSH and send data to the server through HTTP
+  requests. For our purpose we used the `hostapd` and `dnsmasq` softwares but it can also be 
+  done via GUI on Raspberry Pi OS very easily, nonetheless, in the guide aforementioned,
+  we provide a step-by-step tutorial.
   
   == Controller Setup <controller-setup>
   
@@ -107,7 +108,7 @@ exit 0
   - #link(<ndvi>)[NDVI]
   
   For the temperature and moisture, we used a `DHT22` sensor, which is very common
-  and that reflects in very good software support.
+  and that is reflected in very good software support.
   
   === DHT22 <dht22>
   
@@ -157,7 +158,7 @@ exit 0
   === Moisture <moisture>
   
   We used a generic capacitive soil moisture sensor, to convert the analog signal
-  we need to use an analog-to-digital converter. For our purpose we used the
+  we need to use an analog-to-digital converter. For our purpose, we used the
   `MCP3008` ADC which features eight channels, thus making it possible to extend
   our setup with a decent number of other sensors (for example a PH-meter or a
   LUX-meter). The following schematics illustrate how we connected the ADC to the
@@ -368,10 +369,11 @@ exit 0
   #image("../img/relay-pump-schematics.jpeg")
   #v(600pt) /* FIXME: remove once issue #466 is implemented */
   
+  The relay enables us to control modules with a voltage higher than the 5V tolerated by the Raspberry Pi.
   In our project, we just connected one pump but it's trivial to extend the
-  project to multiple pumps (for example we plan to add one dedicated to pumping
-  fertilized water) or other devices. An example of the code used to interact with
-  the pump is the following:
+  configuration to multiple pumps (for example we plan to add one dedicated to pumping
+  fertilized water) or other devices, especially with the kind of relay that we used. 
+  An example of the code used to interact with the pump is the following:
   
   
   ```python

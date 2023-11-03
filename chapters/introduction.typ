@@ -40,9 +40,9 @@ The central focus lies in the development of a digital twin (see @digital-twins)
 
     == Thesis Contents
 
-    The thesis from a theoretical point of view focuses on the concept of digital twins in @digital-twins and the way the SMOL language (in @smol-heading) is closely tied with them. In @tools-and-technologies we will discuss notions regarding semantic technologies in addition to all the tools and technolgies we used, such as NoSQL databases and different programming languages and paradigms.
+    The thesis from a theoretical point of view focuses on the concept of digital twins in @digital-twins and the way the SMOL language (in @smol-heading) is closely tied with them. In @tools-and-technologies we will discuss notions regarding semantic technologies in addition to all the tools and technologies we used, such as NoSQL databases and different programming languages and paradigms.
 
-    In @raspberry-responsabilities-and-physical-setup we will threat the hardware side of the project and how the sensors interface on the software side. In @software-components we will take a deep dive into the codebase and have a closer look at the implementation and structure of the various programs.
+    In @raspberry-responsabilities-and-physical-setup we will treat the hardware side of the project and how the sensors interface on the software side. In @software-components we will take a deep dive into the codebase and have a closer look at the implementation and structure of the various programs.
 
   ]
 )

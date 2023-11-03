@@ -308,10 +308,12 @@ with each being responsible for a distinct task, in particular, we have:
   
   ```smol
   /**
-  * Represents a physical Plant. Should be retrieved 
-  * from the asset model via AssetModel.getPlants()
-  * Each plant is contained in a Pot. The Pot contains
-  * the information about which plant it contains.
+  * Represents a physical Plant. Should be 
+  * retrieved from the asset model via 
+  * AssetModel.getPlants() Each plant is 
+  * contained in a Pot. The Pot contains
+  * the information about which plant 
+  * it contains.
   */
   class Plant(String plantId, Double idealMoisture, String healthState)
     Double getNdvi()
@@ -800,7 +802,7 @@ with each being responsible for a distinct task, in particular, we have:
   linearly spaced between the first and the last value of the `range` tuple with a
   length equal to the number of values in the `XP` array. #v(600pt) /* FIXME: remove once issue #466 is implemented */The
   arrays `XP` and `FP`, respectively the x-coordinates of the data points and the
-  y-coordinates of the data points, are reversed if the values are not in
+  y-coordinates of the data points are reversed if the values are not in
   ascending order, this way it's possible to use the `interp` function even for
   sensors like the moisture sensor that decreases in voltage as the moisture
   increases.

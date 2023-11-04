@@ -16,7 +16,7 @@
   body,
 ) = {
   // Set the document's basic properties.
-  set document(author: candidate.map(a => a.name), title: title)
+  set document(author: candidate.name, title: title)
   set text(font: "New Computer Modern", lang: "en", size: 10pt)
   set page(
     paper: paper-size,
